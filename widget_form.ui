@@ -34,6 +34,12 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QFrame" name="right_frame">
+      <property name="minimumSize">
+       <size>
+        <width>720</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -51,40 +57,6 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="time_Label">
-         <property name="minimumSize">
-          <size>
-           <width>680</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>680</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>DSEG14 Classic</family>
-           <pointsize>80</pointsize>
-           <weight>75</weight>
-           <italic>true</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgba(170, 170, 255, 200);</string>
-         </property>
-         <property name="text">
-          <string>00:00</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QFrame" name="r_bottom_frame">
          <property name="frameShape">
@@ -93,6 +65,52 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QFrame" name="r_middle_frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="time_Label">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>680</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>DSEG14 Classic</family>
+              <pointsize>80</pointsize>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgba(170, 170, 255, 200);</string>
+            </property>
+            <property name="text">
+             <string>00:00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -129,8 +147,8 @@
         <widget class="QFrame" name="bottom_frame">
          <property name="maximumSize">
           <size>
-           <width>500</width>
-           <height>160</height>
+           <width>450</width>
+           <height>140</height>
           </size>
          </property>
          <property name="styleSheet">

@@ -8,6 +8,7 @@ time_format = "%H:%M<sup><u>%S</u></sup>"
 
 [intervals]
 
+sys_proc_refresh_ms = 10000
 sensor_refresh_ms = 500
 clock_refresh_ms = 500
 network_refresh_ms = 5000

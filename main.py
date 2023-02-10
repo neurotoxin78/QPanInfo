@@ -1,3 +1,4 @@
+import gc
 import sys
 from datetime import datetime
 
@@ -29,6 +30,7 @@ class MainWindow(QMainWindow):
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.ipLabel = QLabel("Label: ")
+        self.systimer = QTimer()
         self.clocktimer = QTimer()
         self.sensortimer = QTimer()
         self.temptimer = QTimer()
@@ -40,6 +42,8 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        self.systimer.timeout.connect(self.systemProcess)
+        self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.sensortimer.timeout.connect(self.sysStat)
         self.sensortimer.start(self.config['intervals']['sensor_refresh_ms'])
         self.clocktimer.timeout.connect(self.Clock)
@@ -54,6 +58,9 @@ class MainWindow(QMainWindow):
         self.statusBar.addPermanentWidget(self.ipLabel)
         self.ipLabel.setText("Network not connected!")
 
+    def systemProcess(self):
+        gc.collect()
+        self.statusBar.showMessage("Freeing memory...", 1000)
 
     def volume_dial_set(self):
         try:
@@ -89,21 +96,17 @@ class MainWindow(QMainWindow):
         self.time_Label.setText(current_time)  # u'\u2770' + + u'\u2771'
 
     def sysStat(self):
-        # dict(psutil.virtual_memory()._asdict())
-        # psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
         self.ramBar.setValue(int(psutil.virtual_memory().percent))
-        # cpu string
         self.cpuBar.setMaximum(100)
         self.cpuBar.setValue(int(psutil.cpu_percent()))
-        # self.cpu_progressBar.setFormat("%.1f %%" % psutil.cpu_percent())
-        # cpu temp
+
 
     def tempStat(self):
         temp = get_cputemp(self.config['cpu_temp']['cpu_temp_sensor_path'])
         self.tempBar.setMaximum(100 * 100)
         self.tempBar.setValue(int(temp) * 100)
         self.tempBar.setFormat("%.01f °C" % temp)
-        # gc.collect()
+
 
     def netStat(self):
         io_2 = psutil.net_io_counters(pernic=True)
