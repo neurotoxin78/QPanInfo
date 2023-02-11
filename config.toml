@@ -20,4 +20,4 @@ net_interval_ms = 1000
 cpu_temp_sensor_path = "/sys/class/hwmon/hwmon1/temp1_input"
 
 [network]
-interface_num = 1
+interface = "enp39s0"

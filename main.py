@@ -109,30 +109,16 @@ class MainWindow(QMainWindow):
 
 
     def netStat(self):
-        try:
-            io_2 = psutil.net_io_counters(pernic=True)
-            # initialize the data to gather (a list of dicts)
-            data = []
-            for iface, iface_io in self.io.items():
-                print(iface)
-                # new - old stats gets us the speed
-                upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, io_2[
-                    iface].bytes_recv - iface_io.bytes_recv
-                data.append({
-                    "iface": iface, "Download": get_size(io_2[iface].bytes_recv),
-                    "Upload": get_size(io_2[iface].bytes_sent),
-                    "Upload Speed": f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s",
-                    "Download Speed": f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s",
-                })
+        io_2 = psutil.net_io_counters(pernic=True)
+        iface=self.config['network']['interface']
+        iface_io=self.io[iface]
+        upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
+            io_2[iface].bytes_recv - iface_io.bytes_recv
+        self.interfaceLabel.setText("Interface: " + iface)
+        self.upLabel.setText(f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
+        self.dnLabel.setText(f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
+        self.io = io_2
 
-        # update the I/O stats for the next iteration
-            ife = data[self.config['network']['interface_num']]
-            self.interfaceLabel.setText("Interface: " + ife['iface'])
-            self.upLabel.setText(ife['Upload Speed'])
-            self.dnLabel.setText(ife['Download Speed'])
-            self.io = io_2
-        except:
-            pass
 
 def main():
     config = get_config()
