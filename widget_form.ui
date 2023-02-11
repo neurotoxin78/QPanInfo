@@ -94,13 +94,15 @@
              <font>
               <family>DSEG14 Classic</family>
               <pointsize>80</pointsize>
-              <weight>75</weight>
               <italic>true</italic>
               <bold>true</bold>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgba(170, 170, 255, 160);</string>
+             <string notr="true">QLabel
+{
+color: rgba(255, 85, 0, 240);
+}</string>
             </property>
             <property name="text">
              <string>00:00</string>
@@ -189,13 +191,12 @@ border-radius: 20px;</string>
              <font>
               <family>Fira Mono for Powerline</family>
               <pointsize>14</pointsize>
-              <weight>50</weight>
               <italic>false</italic>
               <bold>false</bold>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(255, 170, 127);
+             <string notr="true">color: rgba(85, 170, 255, 200);
 background-color: rgba(0, 0, 0, 0);</string>
             </property>
             <property name="text">
@@ -463,12 +464,11 @@ border-radius: 20px;</string>
                   <property name="font">
                    <font>
                     <pointsize>14</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 170, 127);</string>
+                   <string notr="true">color: rgba(170, 170, 255, 255);</string>
                   </property>
                   <property name="text">
                    <string>0.0 b/s</string>
@@ -489,7 +489,6 @@ border-radius: 20px;</string>
                   <property name="font">
                    <font>
                     <pointsize>14</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -512,11 +511,16 @@ border-radius: 20px;</string>
                     <height>30</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(85, 255, 127);</string>
                   </property>
                   <property name="text">
-                   <string>Upload speed:</string>
+                   <string>Upload:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -540,7 +544,6 @@ border-radius: 20px;</string>
                   <property name="font">
                    <font>
                     <pointsize>14</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -563,11 +566,16 @@ border-radius: 20px;</string>
                     <height>30</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 170, 127);</string>
+                   <string notr="true">color: rgba(170, 170, 255, 255);</string>
                   </property>
                   <property name="text">
-                   <string>Download speed:</string>
+                   <string>Download:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

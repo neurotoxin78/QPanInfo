@@ -5,8 +5,7 @@ from datetime import datetime
 import psutil
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QLabel)
-from PyQt5.QtGui import QStandardItemModel
+from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QLabel,  QGraphicsDropShadowEffect)
 from pulsectl import Pulse
 from rich.console import Console
 
@@ -17,7 +16,6 @@ con = Console()
 
 
 class MainWindow(QMainWindow):
-    P_PID, P_NAME, P_CPU, P_MEM = range(4)
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load the UI Page
@@ -42,6 +40,12 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        # creating a QGraphicsDropShadowEffect object
+        shadow = QGraphicsDropShadowEffect()
+        # setting blur radius
+        shadow.setBlurRadius(15)
+        self.time_Label.setGraphicsEffect(shadow)
+        # Timers
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.sensortimer.timeout.connect(self.sysStat)
