@@ -100,13 +100,13 @@
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgba(170, 170, 255, 200);</string>
+             <string notr="true">color: rgba(170, 170, 255, 160);</string>
             </property>
             <property name="text">
              <string>00:00</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -178,17 +178,6 @@ border-radius: 20px;</string>
            <number>5</number>
           </property>
           <item>
-           <widget class="QToolButton" name="muteButton">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset theme="audio">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLabel" name="volume_label">
             <property name="maximumSize">
              <size>
@@ -213,7 +202,7 @@ background-color: rgba(0, 0, 0, 0);</string>
              <string>0</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
