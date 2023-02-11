@@ -29,9 +29,9 @@ def get_size(bytes):
     """
     Returns size of bytes in a nice format
     """
-    for unit in ['', 'K', 'M', 'G', 'T', 'P']:
+    for unit in ['K', 'M', 'G', 'T', 'P']:
         if bytes < 1024:
-            return f"{bytes:.2f}{unit}B"
+            return f"{bytes:.1f}{unit}B"
         bytes /= 1024
 
 def extended_exception_hook(exec_type, value, traceback):

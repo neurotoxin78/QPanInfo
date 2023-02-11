@@ -110,8 +110,8 @@ class MainWindow(QMainWindow):
 
     def netStat(self):
         io_2 = psutil.net_io_counters(pernic=True)
-        iface=self.config['network']['interface']
-        iface_io=self.io[iface]
+        iface = self.config['network']['interface']
+        iface_io = self.io[iface]
         upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
             io_2[iface].bytes_recv - iface_io.bytes_recv
         self.interfaceLabel.setText("Interface: " + iface)
