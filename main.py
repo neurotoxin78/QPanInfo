@@ -5,12 +5,12 @@ from datetime import datetime
 import psutil
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QLabel,  QGraphicsDropShadowEffect)
+from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QLabel, QMenu,  QGraphicsDropShadowEffect)
 from pulsectl import Pulse
 from rich.console import Console
 
 from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size
-from widgets import VLine
+from widgets import Launcher
 
 con = Console()
 
@@ -21,13 +21,13 @@ class MainWindow(QMainWindow):
         # Load the UI Page
         self.config = get_config()
         uic.loadUi('widget_form.ui', self)
-        self.setWindowTitle("Power Consumption")
+        self.setWindowTitle("Blackout PC Launcher")
         self.setWindowFlags(Qt.FramelessWindowHint
-                            | Qt.Tool
+                            | Qt.Tool | Qt.WindowStaysOnBottomHint
                             )
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.ipLabel = QLabel("Label: ")
+        #self.ipLabel = QLabel("Label: ")
         self.systimer = QTimer()
         self.clocktimer = QTimer()
         self.sensortimer = QTimer()
@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
         self.volume_dial_set()
         self.volume_dial.valueChanged.connect(self.volume_change)
         self.io = psutil.net_io_counters(pernic=True)
+        self.launcher = Launcher()
         self.initUI()
 
     def initUI(self):
@@ -58,9 +59,17 @@ class MainWindow(QMainWindow):
         self.temptimer.start(self.config['intervals']['cpu_temp_refresh_ms'])
         self.nettimer.timeout.connect(self.netStat)
         self.nettimer.start(self.config['intervals']['net_interval_ms'])
-        self.statusBar.addPermanentWidget(VLine())  # <---
-        self.statusBar.addPermanentWidget(self.ipLabel)
+        self.appBtn.clicked.connect(self.app_click)
         self.ipLabel.setText("Network not connected!")
+
+    def launch(self, data):
+        print(data)
+
+    def app_click(self):
+        monitor = QDesktopWidget().screenGeometry(self.config['display']['output_display'])
+        self.launcher.move(monitor.left(), monitor.top())
+
+        self.launcher.show()
 
     def systemProcess(self):
         gc.collect()
@@ -92,7 +101,7 @@ class MainWindow(QMainWindow):
 
 
     def CheckIP(self):
-        self.ipLabel.setText(get_ip())
+        self.ipLabel.setText('IP: ' + get_ip())
 
     def Clock(self):
         now = datetime.now()
