@@ -31,7 +31,7 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="centralLayout">
     <item row="0" column="0">
      <widget class="QFrame" name="left_frame">
       <property name="minimumSize">
@@ -46,7 +46,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_7">
+      <layout class="QGridLayout" name="left_frameLayout">
        <item row="0" column="0">
         <widget class="QFrame" name="r_top_frame">
          <property name="frameShape">
@@ -55,6 +55,29 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
+         <layout class="QGridLayout" name="r_top_frameLayout">
+          <item row="0" column="0">
+           <widget class="QFrame" name="weather_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="weather_frameLayout"/>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item row="2" column="0">
@@ -65,7 +88,7 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_9">
+         <layout class="QGridLayout" name="l_bottom_frameLayout">
           <item row="0" column="0">
            <widget class="QPushButton" name="appBtn">
             <property name="maximumSize">
@@ -93,7 +116,7 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_8">
+         <layout class="QGridLayout" name="l_middle_frameLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="time_Label">
             <property name="minimumSize">
@@ -144,7 +167,7 @@ color: rgba(255, 85, 0, 240);
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0">
+      <layout class="QGridLayout" name="right_frameLayout" rowstretch="0,0,0">
        <property name="leftMargin">
         <number>5</number>
        </property>
@@ -171,7 +194,7 @@ color: rgba(255, 85, 0, 240);
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3">
+         <layout class="QGridLayout" name="top_frameLayout">
           <item row="0" column="0" colspan="2">
            <widget class="QFrame" name="sensor_frame">
             <property name="minimumSize">
@@ -196,7 +219,7 @@ border-radius: 20px;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_5">
+            <layout class="QGridLayout" name="sensor_frameLayout">
              <item row="0" column="0">
               <widget class="QLabel" name="cpulabel">
                <property name="minimumSize">
@@ -374,7 +397,7 @@ border-radius: 20px;</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="bootom_frameLayout">
           <item>
            <widget class="QLabel" name="volume_label">
             <property name="maximumSize">
@@ -440,7 +463,7 @@ border-radius: 20px;</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_4">
+         <layout class="QGridLayout" name="middle_frameLayout">
           <item row="1" column="0" colspan="2">
            <widget class="QFrame" name="net_frame">
             <property name="minimumSize">
@@ -461,7 +484,7 @@ border-radius: 20px;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6">
+            <layout class="QGridLayout" name="net_frameLayout">
              <item row="1" column="2">
               <widget class="QLabel" name="upLabel">
                <property name="minimumSize">

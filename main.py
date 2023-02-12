@@ -10,7 +10,7 @@ from pulsectl import Pulse
 from rich.console import Console
 
 from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size
-from widgets import Launcher
+from widgets import Launcher, Weather
 
 con = Console()
 
@@ -38,6 +38,7 @@ class MainWindow(QMainWindow):
         self.volume_dial.valueChanged.connect(self.volume_change)
         self.io = psutil.net_io_counters(pernic=True)
         self.launcher = Launcher()
+        self.weather = Weather()
         self.initUI()
 
     def initUI(self):
@@ -61,6 +62,14 @@ class MainWindow(QMainWindow):
         self.nettimer.start(self.config['intervals']['net_interval_ms'])
         self.appBtn.clicked.connect(self.app_click)
         self.ipLabel.setText("Network not connected!")
+        self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
+        self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
+        self.weather_frameLayout.addWidget(self.weather)
+
+    def AppLaunch(self, command : str):
+        print(command)
+        self.launcher.hide()
+
 
     def launch(self, data):
         print(data)
