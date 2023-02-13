@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         #self.ipLabel = QLabel("Label: ")
+        self.weathertimer = QTimer()
         self.systimer = QTimer()
         self.clocktimer = QTimer()
         self.sensortimer = QTimer()
@@ -42,12 +43,15 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        stylesheet = "widget_form.qss"
         # creating a QGraphicsDropShadowEffect object
         shadow = QGraphicsDropShadowEffect()
         # setting blur radius
         shadow.setBlurRadius(15)
         self.time_Label.setGraphicsEffect(shadow)
         # Timers
+        self.weathertimer.timeout.connect(self.weatherRefresh)
+        self.weathertimer.start(self.config['intervals']['weather_fefresh_ms'])
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.sensortimer.timeout.connect(self.sysStat)
@@ -65,6 +69,16 @@ class MainWindow(QMainWindow):
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
+        self.loadStylesheet(stylesheet)
+        self.weather.get_weather('Kyiv')
+
+    def weatherRefresh(self):
+        self.weather.get_weather('Kyiv')
+        self.statusBar.showMessage("Weather data refreshed", 1500)
+
+    def loadStylesheet(self, sshFile):
+        with open(sshFile, "r") as fh:
+            self.setStyleSheet(fh.read())
 
     def AppLaunch(self, command : str):
         print(command)

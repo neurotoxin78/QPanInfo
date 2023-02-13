@@ -89,19 +89,36 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="l_bottom_frameLayout">
-          <item row="0" column="0">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <item row="0" column="0" alignment="Qt::AlignBottom">
            <widget class="QPushButton" name="appBtn">
             <property name="maximumSize">
              <size>
-              <width>80</width>
-              <height>16777215</height>
+              <width>100</width>
+              <height>40</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Roboto Mono for Powerline</family>
+              <pointsize>16</pointsize>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
             </property>
             <property name="text">
              <string>Apps</string>
             </property>
             <property name="icon">
-             <iconset theme="go-up"/>
+             <iconset theme="system-run"/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
