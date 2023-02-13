@@ -141,7 +141,7 @@ QPushButton
 {
 	background-color:rgb(255, 150, 0);
 	color: #fff;
-	min-width: 50px;
+	min-width: 100px;
 	border-radius: 4px;
 	padding: 5px;
 
@@ -152,7 +152,8 @@ QPushButton::flat
 {
 	background-color: transparent;
 	border: none;
-	color: #000;
+	min-width: 100px;
+	color: #fff;
 
 }
 
@@ -168,8 +169,9 @@ QPushButton::disabled
 
 QPushButton::hover
 {
-	background-color:rgb(255, 150, 0);
-	border: 2px solid rgb(255, 106, 0);
+	background-color:rgb(255, 255, 255);
+	border: 1px solid rgb(255, 255, 255);
+	border-radius: 10px;
 
 }
 

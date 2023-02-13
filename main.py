@@ -70,11 +70,17 @@ class MainWindow(QMainWindow):
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
-        self.weather.get_weather()
+        try:
+            self.weather.get_weather()
+        except:
+            pass
 
     def weatherRefresh(self):
-        self.weather.get_weather()
-        self.statusBar.showMessage("Weather data refreshed", 1500)
+        try:
+            self.weather.get_weather()
+            self.statusBar.showMessage("Weather data refreshed", 1500)
+        except:
+            self.statusBar.showMessage("Weather: ERROR", 1500)
 
     def loadStylesheet(self, sshFile):
         with open(sshFile, "r") as fh:

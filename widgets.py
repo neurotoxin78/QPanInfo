@@ -1,11 +1,13 @@
+import requests
 from PyQt5 import uic
-from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QCompleter, QPushButton, QGridLayout,
                              QLabel, QGraphicsDropShadowEffect)
+
 from tools import get_config
-import requests, json
+
 
 class VLine(QFrame):
     # a simple VLine, like the one you get from designer
@@ -59,8 +61,11 @@ class Weather(QWidget):
         shadow2.setBlurRadius(10)
         shadow3 = QGraphicsDropShadowEffect()
         shadow3.setBlurRadius(10)
+        shadow4 = QGraphicsDropShadowEffect()
+        shadow4.setBlurRadius(10)
         self.layout.addWidget(self.we_condition, 0, 0)
         self.we_condition.setIconSize(QSize(96, 96))
+        self.we_condition.setGraphicsEffect(shadow4)
         self.we_condition.clicked.connect(self.refresh)
         self.layout.addWidget(self.current_temperature, 1, 0)
         self.layout.addWidget(self.current_humidity, 1, 1)
@@ -85,7 +90,10 @@ class Weather(QWidget):
         with open(sshFile, "r") as fh:
             self.setStyleSheet(fh.read())
     def refresh(self):
-        self.get_weather()
+        try:
+            self.get_weather()
+        except:
+            pass
 
     def get_weather(self):
         api_key = self.config['weather']['api_key']
@@ -97,6 +105,7 @@ class Weather(QWidget):
         city_name = self.config['weather']['city']
 
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&lang=UA"
+        print(complete_url)
 
         response = requests.get(complete_url)
         x = response.json()
@@ -129,9 +138,9 @@ class Weather(QWidget):
             weather_code = z[0]["id"]
             print(weather_description)
             self.we_condition_description.setText(weather_description)
-            self.current_temperature.setText("<b>" + str(current_temperature) + ' °C</b>')
-            self.current_humidity.setText("<b>" + str(current_humidity) + ' %</b>')
-            self.current_pressure.setText("<b>" + str(current_pressure) + ' hPa</b>')
+            self.current_temperature.setText("<b>" + str(current_temperature) + ' <sup>°C</sup></b>')
+            self.current_humidity.setText("<b>" + str(current_humidity) + ' <sup>%</sup><</b>')
+            self.current_pressure.setText("<b>" + str(current_pressure) + ' <sup>hPa</sup><</b>')
             self.set_we_description(weather_code)
 
 
