@@ -43,13 +43,11 @@ class Weather(QWidget):
         self.we_condition = QPushButton()
         self.we_condition.setStyleSheet("QPushButton { background-color: transparent }")
         self.we_condition.setFlat(True)
+        self.we_condition_description = QLabel()
         self.current_temperature = QLabel()
         self.current_humidity = QLabel()
         self.current_pressure = QLabel()
         self.setupUI()
-        self.current_temperature.setText("25 °C")
-        self.current_humidity.setText("42 %")
-        self.current_pressure.setText("1000 hP")
 
     def setupUI(self):
         stylesheet = "weather.qss"
@@ -58,13 +56,21 @@ class Weather(QWidget):
         self.we_condition.setIcon(QIcon.fromTheme("weather-clear-night"))
         self.we_condition.setIconSize(QSize(96, 96))
         self.we_condition.clicked.connect(self.refresh)
-        self.layout.addWidget(self.current_temperature, 0, 1)
-        self.layout.addWidget(self.current_humidity, 0, 2)
-        self.layout.addWidget(self.current_pressure, 0, 3)
+        self.layout.addWidget(self.current_temperature, 1, 0)
+        self.layout.addWidget(self.current_humidity, 1, 1)
+        self.layout.addWidget(self.current_pressure, 1, 2)
+        self.layout.addWidget(self.we_condition_description, 0, 1)
         self.layout.setRowStretch(1, 0)
-        self.current_temperature.setFont(QFont('Noto Sans', 18))
-        self.current_humidity.setFont(QFont('Noto Sans', 18))
-        self.current_pressure.setFont(QFont('Noto Sans', 18))
+        self.we_condition_description.setFont(QFont('Noto Sans', 20))
+        self.we_condition_description.setAlignment(Qt.AlignCenter | Qt.AlignCenter)
+        self.we_condition_description.setGeometry(0, 0, 40, 100)
+
+        self.current_temperature.setFont(QFont('Noto Sans', 20))
+        self.current_humidity.setFont(QFont('Noto Sans', 20))
+        self.current_pressure.setFont(QFont('Noto Sans', 20))
+        self.current_temperature.setAlignment(Qt.AlignCenter)
+        self.current_humidity.setAlignment(Qt.AlignCenter)
+        self.current_pressure.setAlignment(Qt.AlignCenter)
         self.loadStylesheet(stylesheet)
 
     def loadStylesheet(self, sshFile):
@@ -82,7 +88,7 @@ class Weather(QWidget):
         # Give city name
         city_name = city
 
-        complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+        complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&lang=UA"
 
         response = requests.get(complete_url)
         x = response.json()
@@ -112,11 +118,41 @@ class Weather(QWidget):
             # to the "description" key at
             # the 0th index of z
             weather_description = z[0]["description"]
-
-            self.current_temperature.setText(str(current_temperature) + ' °C')
-            self.current_humidity.setText(str(current_humidity) + ' %')
-            self.current_pressure.setText(str(current_pressure) + 'hPa')
+            weather_code = z[0]["id"]
+            print(weather_description)
+            self.we_condition_description.setText(weather_description)
+            self.current_temperature.setText("<b>" + str(current_temperature) + ' °C</b>')
+            self.current_humidity.setText("<b>" + str(current_humidity) + ' %</b>')
+            self.current_pressure.setText("<b>" + str(current_pressure) + ' hPa</b>')
+            self.set_we_description(weather_code)
 
 
         else:
             print(" City Not Found ")
+
+
+    def set_we_description(self, code):
+        match code:
+            case num if num in range(200, 233):
+                self.we_condition.setIcon(QIcon.fromTheme("weather-storm"))
+
+            case num if num in range(300, 322):
+                self.we_condition.setIcon(QIcon.fromTheme("weather-severe-alert"))
+
+            case num if num in range(500, 532):
+                self.we_condition.setIcon(QIcon.fromTheme("weather-showers-scattered"))
+
+            case num if num in range(600, 623):
+                self.we_condition.setIcon(QIcon.fromTheme("weather-snow"))
+
+            case num if num in range(700, 782):
+                self.we_condition.setIcon(QIcon.fromTheme("weather-fog"))
+
+            case 800:
+                self.we_condition.setIcon(QIcon.fromTheme("weather-clear"))
+
+            case num if num in range(801, 805):
+                self.we_condition.setIcon(QIcon.fromTheme("weather-overcast"))
+
+            case _:
+                print(code)
