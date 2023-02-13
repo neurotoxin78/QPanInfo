@@ -5,7 +5,7 @@ from datetime import datetime
 import psutil
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer, QProcess
-from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QLabel, QMenu,  QGraphicsDropShadowEffect)
+from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QGraphicsDropShadowEffect)
 from pulsectl import Pulse
 from rich.console import Console
 
@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
         self.nettimer.timeout.connect(self.netStat)
         self.nettimer.start(self.config['intervals']['net_interval_ms'])
         self.appBtn.clicked.connect(self.app_click)
-        self.ipLabel.setText("Network not connected!")
+        self.ipLabel.setText("Мережа не підключена")
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
@@ -87,11 +87,10 @@ class MainWindow(QMainWindow):
             self.setStyleSheet(fh.read())
 
     def AppLaunch(self, command : str):
-        print(command)
         self.process.start(command, [''])
-        self.process.started.connect(lambda: print("Running"))
-        self.process.finished.connect(lambda: print("Finished"))
-        self.process.error.connect(lambda: print("Error"))
+        self.process.started.connect(lambda: self.statusBar.showMessage("Виконано", 1500))
+        self.process.finished.connect(lambda: self.statusBar.showMessage("Закрито", 1500))
+        self.process.error.connect(lambda: self.statusBar.showMessage("Не виконано", 1500))
         self.launcher.hide()
 
 
@@ -106,7 +105,7 @@ class MainWindow(QMainWindow):
 
     def systemProcess(self):
         gc.collect()
-        self.statusBar.showMessage("Freeing memory...", 1000)
+        self.statusBar.showMessage("Звільнення пам'яті...", 1000)
 
     def volume_dial_set(self):
         try:
@@ -115,7 +114,7 @@ class MainWindow(QMainWindow):
                 volume = sink_input.volume
                 volume_value = int(volume.value_flat * 100)  # average level across channels (float)
             self.volume_dial.setValue(volume_value)
-            self.volume_label.setText("Volume " + str(int(volume_value)) + '%')
+            self.volume_label.setText("Гучність " + str(int(volume_value)) + '%')
         except:
             pass
 
@@ -128,7 +127,7 @@ class MainWindow(QMainWindow):
                 volume = sink_input.volume
                 volume.value_flat = volume_value  # sets all volume.values to 0.3
                 pulse.volume_set(sink_input, volume)  # applies the change
-                self.volume_label.setText("Volume " + str(int(volume_value * 100)) + '%')
+                self.volume_label.setText("Гучність " + str(int(volume_value * 100)) + '%')
         except:
             pass
 
@@ -160,7 +159,7 @@ class MainWindow(QMainWindow):
         iface_io = self.io[iface]
         upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
             io_2[iface].bytes_recv - iface_io.bytes_recv
-        self.interfaceLabel.setText("Interface: " + iface)
+        self.interfaceLabel.setText("інтерфейс: " + iface)
         self.upLabel.setText(f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
         self.dnLabel.setText(f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
         self.io = io_2

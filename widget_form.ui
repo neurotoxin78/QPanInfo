@@ -102,7 +102,7 @@
            <widget class="QPushButton" name="appBtn">
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>60</height>
              </size>
             </property>
@@ -110,13 +110,12 @@
              <font>
               <family>Roboto Mono for Powerline</family>
               <pointsize>16</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-              <underline>true</underline>
+              <bold>false</bold>
+              <underline>false</underline>
              </font>
             </property>
             <property name="text">
-             <string>Apps</string>
+             <string>Виконати</string>
             </property>
             <property name="icon">
              <iconset theme="system-run">
@@ -169,7 +168,6 @@
              <font>
               <family>DSEG14 Classic</family>
               <pointsize>80</pointsize>
-              <weight>75</weight>
               <italic>true</italic>
               <bold>true</bold>
              </font>
@@ -177,7 +175,7 @@
             <property name="styleSheet">
              <string notr="true">QLabel
 {
-color: rgba(255, 85, 0, 240);
+	color: rgb(255, 170, 127);
 }</string>
             </property>
             <property name="text">
@@ -445,7 +443,6 @@ border-radius: 20px;</string>
              <font>
               <family>Fira Mono for Powerline</family>
               <pointsize>12</pointsize>
-              <weight>50</weight>
               <italic>false</italic>
               <bold>false</bold>
              </font>
@@ -521,83 +518,6 @@ border-radius: 20px;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="net_frameLayout">
-             <item row="1" column="2">
-              <widget class="QLabel" name="upLabel">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(85, 255, 127);</string>
-               </property>
-               <property name="text">
-                <string>0.0 b/s</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="dnLabel">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgba(170, 170, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string>0.0 b/s</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgba(170, 170, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string>Download:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0" colspan="3">
               <widget class="QLabel" name="interfaceLabel">
                <property name="minimumSize">
@@ -615,7 +535,6 @@ border-radius: 20px;</string>
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -630,8 +549,8 @@ border-radius: 20px;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
+             <item row="2" column="2">
+              <widget class="QLabel" name="upLabel">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -640,7 +559,7 @@ border-radius: 20px;</string>
                </property>
                <property name="font">
                 <font>
-                 <weight>75</weight>
+                 <pointsize>14</pointsize>
                  <bold>true</bold>
                 </font>
                </property>
@@ -648,14 +567,14 @@ border-radius: 20px;</string>
                 <string notr="true">color: rgb(85, 255, 127);</string>
                </property>
                <property name="text">
-                <string>Upload:</string>
+                <string>0.0 b/s</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
-             <item row="3" column="0" colspan="3">
+             <item row="4" column="0" colspan="3">
               <widget class="QLabel" name="ipLabel">
                <property name="maximumSize">
                 <size>
@@ -665,7 +584,6 @@ border-radius: 20px;</string>
                </property>
                <property name="font">
                 <font>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -674,6 +592,79 @@ border-radius: 20px;</string>
                </property>
                <property name="text">
                 <string>IP: 0.0.0.0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(85, 255, 127);</string>
+               </property>
+               <property name="text">
+                <string>Відвантаження</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgba(170, 170, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>Завантаження</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="dnLabel">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgba(170, 170, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>0.0 b/s</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

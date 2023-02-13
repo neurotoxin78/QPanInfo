@@ -959,6 +959,7 @@ QStatusBar
 {
 	background-color: transparent;
 	color: #ffffff;
+	font-weight: bold;
 }
 
 

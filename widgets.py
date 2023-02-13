@@ -71,10 +71,11 @@ class Weather(QWidget):
         self.layout.addWidget(self.current_humidity, 1, 1)
         self.layout.addWidget(self.current_pressure, 1, 2)
         self.layout.addWidget(self.we_condition_description, 0, 1)
-        self.layout.setRowStretch(1, 0)
+        #self.layout.setRowStretch(1, 0)
         self.we_condition_description.setFont(QFont('Noto Sans', 20))
         self.we_condition_description.setAlignment(Qt.AlignCenter | Qt.AlignCenter)
-        self.we_condition_description.setGeometry(0, 0, 40, 100)
+        self.we_condition_description.setGeometry(0, 0, 20, 50)
+        #self.we_condition_description.setStyleSheet("background-color: rgba(125, 207, 255, 50); border-radius: 20px;")
         self.current_temperature.setFont(QFont('Noto Sans', 24))
         self.current_humidity.setFont(QFont('Noto Sans', 24))
         self.current_pressure.setFont(QFont('Noto Sans', 24))
@@ -84,6 +85,9 @@ class Weather(QWidget):
         self.current_temperature.setGraphicsEffect(shadow1)
         self.current_humidity.setGraphicsEffect(shadow2)
         self.current_pressure.setGraphicsEffect(shadow3)
+        #self.current_temperature.setStyleSheet("background-color: rgba(125, 207, 255, 50); border-radius: 10px;")
+        #self.current_humidity.setStyleSheet("background-color: rgba(203, 255, 125, 50); border-radius: 10px;")
+        #self.current_pressure.setStyleSheet("background-color: rgba(233, 125, 255, 50); border-radius: 10px;")
         self.loadStylesheet(stylesheet)
 
     def loadStylesheet(self, sshFile):

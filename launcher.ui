@@ -58,11 +58,12 @@
     <widget class="QPushButton" name="launchBtn">
      <property name="font">
       <font>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
      <property name="text">
-      <string>Launch</string>
+      <string>Виконати</string>
      </property>
      <property name="autoDefault">
       <bool>true</bool>
