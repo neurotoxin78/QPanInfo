@@ -23,7 +23,8 @@
    <string>Form</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="preferences-desktop-locale"/>
+   <iconset theme="preferences-desktop-locale">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgba(85, 85, 127, 160);</string>
@@ -37,7 +38,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Type ...</string>
+      <string/>
      </property>
      <property name="frame">
       <bool>false</bool>
@@ -83,7 +84,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset theme="application-exit"/>
+      <iconset theme="application-exit">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </item>

@@ -3,8 +3,8 @@ from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import (QFrame, QWidget, QCompleter, QPushButton, QGridLayout,
-                             QLabel)
-
+                             QLabel, QGraphicsDropShadowEffect)
+from tools import get_config
 import requests, json
 
 class VLine(QFrame):
@@ -17,6 +17,7 @@ class Launcher(QWidget):
     def __init__(self, *args, **kwargs):
         super(Launcher, self).__init__(*args, **kwargs)
         # Load the UI Page
+        self.config = get_config()
         uic.loadUi('launcher.ui', self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint) # | Qt.WindowModal)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
@@ -38,6 +39,7 @@ class Launcher(QWidget):
 class Weather(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.config = get_config()
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.we_condition = QPushButton()
@@ -51,9 +53,13 @@ class Weather(QWidget):
 
     def setupUI(self):
         stylesheet = "weather.qss"
+        shadow1 = QGraphicsDropShadowEffect()
+        shadow1.setBlurRadius(10)
+        shadow2 = QGraphicsDropShadowEffect()
+        shadow2.setBlurRadius(10)
+        shadow3 = QGraphicsDropShadowEffect()
+        shadow3.setBlurRadius(10)
         self.layout.addWidget(self.we_condition, 0, 0)
-        #self.we_condition.setGeometry(0, 0, 100, 100)
-        self.we_condition.setIcon(QIcon.fromTheme("weather-clear-night"))
         self.we_condition.setIconSize(QSize(96, 96))
         self.we_condition.clicked.connect(self.refresh)
         self.layout.addWidget(self.current_temperature, 1, 0)
@@ -64,29 +70,31 @@ class Weather(QWidget):
         self.we_condition_description.setFont(QFont('Noto Sans', 20))
         self.we_condition_description.setAlignment(Qt.AlignCenter | Qt.AlignCenter)
         self.we_condition_description.setGeometry(0, 0, 40, 100)
-
-        self.current_temperature.setFont(QFont('Noto Sans', 20))
-        self.current_humidity.setFont(QFont('Noto Sans', 20))
-        self.current_pressure.setFont(QFont('Noto Sans', 20))
+        self.current_temperature.setFont(QFont('Noto Sans', 24))
+        self.current_humidity.setFont(QFont('Noto Sans', 24))
+        self.current_pressure.setFont(QFont('Noto Sans', 24))
         self.current_temperature.setAlignment(Qt.AlignCenter)
         self.current_humidity.setAlignment(Qt.AlignCenter)
         self.current_pressure.setAlignment(Qt.AlignCenter)
+        self.current_temperature.setGraphicsEffect(shadow1)
+        self.current_humidity.setGraphicsEffect(shadow2)
+        self.current_pressure.setGraphicsEffect(shadow3)
         self.loadStylesheet(stylesheet)
 
     def loadStylesheet(self, sshFile):
         with open(sshFile, "r") as fh:
             self.setStyleSheet(fh.read())
     def refresh(self):
-        print("Refresh")
+        self.get_weather()
 
-    def get_weather(self, city : str):
-        api_key = "e7a63eca33717887514a746f7ab259f6"
+    def get_weather(self):
+        api_key = self.config['weather']['api_key']
 
         # base_url variable to store url
-        base_url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
+        base_url = self.config['weather']['url']
 
         # Give city name
-        city_name = city
+        city_name = self.config['weather']['city']
 
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&lang=UA"
 

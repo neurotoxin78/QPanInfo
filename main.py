@@ -4,7 +4,7 @@ from datetime import datetime
 
 import psutil
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, QProcess
 from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QLabel, QMenu,  QGraphicsDropShadowEffect)
 from pulsectl import Pulse
 from rich.console import Console
@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
                             )
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        #self.ipLabel = QLabel("Label: ")
+        self.process = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
         self.weathertimer = QTimer()
         self.systimer = QTimer()
         self.clocktimer = QTimer()
@@ -44,6 +44,7 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         stylesheet = "widget_form.qss"
+        self.loadStylesheet(stylesheet)
         # creating a QGraphicsDropShadowEffect object
         shadow = QGraphicsDropShadowEffect()
         # setting blur radius
@@ -69,11 +70,10 @@ class MainWindow(QMainWindow):
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
-        self.loadStylesheet(stylesheet)
-        self.weather.get_weather('Kyiv')
+        self.weather.get_weather()
 
     def weatherRefresh(self):
-        self.weather.get_weather('Kyiv')
+        self.weather.get_weather()
         self.statusBar.showMessage("Weather data refreshed", 1500)
 
     def loadStylesheet(self, sshFile):
@@ -82,6 +82,10 @@ class MainWindow(QMainWindow):
 
     def AppLaunch(self, command : str):
         print(command)
+        self.process.start(command, [''])
+        self.process.started.connect(lambda: print("Running"))
+        self.process.finished.connect(lambda: print("Finished"))
+        self.process.error.connect(lambda: print("Error"))
         self.launcher.hide()
 
 
