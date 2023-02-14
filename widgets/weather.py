@@ -1,43 +1,10 @@
 import requests
-from PyQt5 import uic
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QIcon, QFont, QPixmap
-from PyQt5.QtWidgets import (QFrame, QWidget, QCompleter, QPushButton, QGridLayout,
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout,
                              QLabel, QGraphicsDropShadowEffect)
 
-from tools import get_config, loadStylesheet, get_apps_list
-
-
-
-
-class VLine(QFrame):
-    # a simple VLine, like the one you get from designer
-    def __init__(self):
-        super(VLine, self).__init__()
-        self.setFrameShape(self.VLine | self.Sunken)
-
-class Launcher(QWidget):
-    def __init__(self, *args, **kwargs):
-        super(Launcher, self).__init__(*args, **kwargs)
-        # Load the UI Page
-        self.config = get_config()
-        uic.loadUi('launcher.ui', self)
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint) # | Qt.WindowModal)
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.setAttribute(Qt.WA_NoSystemBackground, True)
-        self.hideBtn.clicked.connect(self.on_click)
-        apps = get_apps_list("/usr/bin")
-        self.completer = QCompleter(apps)
-        self.lineEdit.setCompleter(self.completer)
-
-    @pyqtSlot()
-    def on_click(self):
-        self.hide()
-
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Space:
-            print("Enter")
+from tools import get_config, loadStylesheet
 
 
 class Weather(QWidget):
@@ -77,9 +44,9 @@ class Weather(QWidget):
         self.we_condition_description.setFont(QFont('Noto Sans', 20))
         self.we_condition_description.setAlignment(Qt.AlignCenter | Qt.AlignCenter)
         self.we_condition_description.setGeometry(0, 0, 20, 50)
-        self.current_temperature.setFont(QFont('Noto Sans', 24))
-        self.current_humidity.setFont(QFont('Noto Sans', 24))
-        self.current_pressure.setFont(QFont('Noto Sans', 24))
+        self.current_temperature.setFont(QFont('Noto Sans', 26))
+        self.current_humidity.setFont(QFont('Noto Sans', 26))
+        self.current_pressure.setFont(QFont('Noto Sans', 26))
         self.current_temperature.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         self.current_humidity.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         self.current_pressure.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)

@@ -10,7 +10,9 @@ from pulsectl import Pulse
 from rich.console import Console
 
 from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size, loadStylesheet
-from widgets import Launcher, Weather
+from widgets.launcher import Launcher
+from widgets.systemload import SystemLoad
+from widgets.weather import Weather
 
 con = Console()
 
@@ -20,7 +22,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load the UI Page
         self.config = get_config()
-        uic.loadUi('widget_form.ui', self)
+        uic.loadUi('main_form.ui', self)
         self.setWindowTitle("Blackout PC Launcher")
         self.setWindowFlags(Qt.FramelessWindowHint
                             | Qt.Tool | Qt.WindowStaysOnBottomHint
@@ -40,7 +42,10 @@ class MainWindow(QMainWindow):
         self.io = psutil.net_io_counters(pernic=True)
         self.launcher = Launcher()
         self.weather = Weather()
+        self.systemLoad = SystemLoad()
+        self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.initUI()
+        self.systemProcess()
 
     def initUI(self):
         stylesheet = "widget_form.qss"
@@ -107,7 +112,7 @@ class MainWindow(QMainWindow):
 
     def systemProcess(self):
         gc.collect()
-        self.statusBar.showMessage("Звільнення пам'яті...", 1000)
+        self.statusBar.showMessage("Вивільнення пам'яті...", self.config['intervals']['statusbar_msg_time_ms'])
 
     def volume_dial_set(self):
         try:
@@ -143,16 +148,16 @@ class MainWindow(QMainWindow):
         self.time_Label.setText(current_time)  # u'\u2770' + + u'\u2771'
 
     def sysStat(self):
-        self.ramBar.setValue(int(psutil.virtual_memory().percent))
-        self.cpuBar.setMaximum(100)
-        self.cpuBar.setValue(int(psutil.cpu_percent()))
+        self.systemLoad.ramBar.setValue(int(psutil.virtual_memory().percent))
+        self.systemLoad.cpuBar.setMaximum(100)
+        self.systemLoad.cpuBar.setValue(int(psutil.cpu_percent()))
 
 
     def tempStat(self):
         temp = get_cputemp(self.config['cpu_temp']['cpu_temp_sensor_path'])
-        self.tempBar.setMaximum(100 * 100)
-        self.tempBar.setValue(int(temp) * 100)
-        self.tempBar.setFormat("%.01f °C" % temp)
+        self.systemLoad.tempBar.setMaximum(100 * 100)
+        self.systemLoad.tempBar.setValue(int(temp) * 100)
+        self.systemLoad.tempBar.setFormat("%.01f °C" % temp)
 
 
     def netStat(self):

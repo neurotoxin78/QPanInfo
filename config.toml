@@ -5,13 +5,14 @@ output_display = 1
 time_format = "%H:%M<sup><u>%S</u></sup>"
 
 [intervals]
-sys_proc_refresh_ms = 10000
+sys_proc_refresh_ms = 60000
 sensor_refresh_ms = 500
 clock_refresh_ms = 500
 network_refresh_ms = 5000
 cpu_temp_refresh_ms = 2000
 net_interval_ms = 1000
 weather_fefresh_min = 10
+statusbar_msg_time_ms = 3000
 
 [cpu_temp]
 cpu_temp_sensor_path = "/sys/class/hwmon/hwmon1/temp1_input"

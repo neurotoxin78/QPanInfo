@@ -213,195 +213,19 @@
        </property>
        <item row="0" column="0">
         <widget class="QFrame" name="top_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>150</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="top_frameLayout">
-          <item row="0" column="0" colspan="2">
-           <widget class="QFrame" name="sensor_frame">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>135</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>135</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgba(42, 42, 62, 120);
-border-radius: 20px;</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="sensor_frameLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="cpulabel">
-               <property name="minimumSize">
-                <size>
-                 <width>39</width>
-                 <height>39</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>CPU:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QProgressBar" name="cpuBar">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>26</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QProgressBar
-{
-border: solid grey;
-border-radius: 3px;
-color: rgb(225, 225, 225);
-background-color: rgba(0, 0, 0, 0);
-}
-QProgressBar::chunk 
-{
-background-color: rgba(255, 170, 127, 160);
-border-radius :6px;
-}  </string>
-               </property>
-               <property name="value">
-                <number>0</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="ramLabel">
-               <property name="minimumSize">
-                <size>
-                 <width>39</width>
-                 <height>31</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>RAM:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QProgressBar" name="ramBar">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>26</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QProgressBar
-{
-border: solid grey;
-border-radius: 3px;
-color: rgb(225, 225, 225);
-background-color: rgba(0, 0, 0, 0);
-}
-QProgressBar::chunk 
-{
-background-color: rgba(134, 255, 148, 160);
-border-radius :6px;
-}  </string>
-               </property>
-               <property name="value">
-                <number>0</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="cpu_tempLabel">
-               <property name="minimumSize">
-                <size>
-                 <width>51</width>
-                 <height>31</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>t  °C</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QProgressBar" name="tempBar">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>26</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QProgressBar
-{
-border: solid grey;
-border-radius: 3px;
-color: rgb(225, 225, 225);
-background-color: rgba(0, 0, 0, 0);
-}
-QProgressBar::chunk 
-{
-background-color: rgba(85, 170, 255, 160);
-border-radius :6px;
-}  </string>
-               </property>
-               <property name="minimum">
-                <number>20</number>
-               </property>
-               <property name="maximum">
-                <number>80</number>
-               </property>
-               <property name="value">
-                <number>19</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="format">
-                <string>%p%°C</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QGridLayout" name="top_frameLayout"/>
         </widget>
        </item>
        <item row="2" column="0">
@@ -442,7 +266,8 @@ border-radius: 20px;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">color: rgba(85, 170, 255, 200);
-background-color: rgba(0, 0, 0, 0);</string>
+background-color: rgba(0, 0, 0, 0);
+</string>
             </property>
             <property name="text">
              <string>0</string>
