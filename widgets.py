@@ -101,43 +101,18 @@ class Weather(QWidget):
 
     def get_weather(self):
         api_key = self.config['weather']['api_key']
-
-        # base_url variable to store url
         base_url = self.config['weather']['url']
-
-        # Give city name
         city_name = self.config['weather']['city']
-
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&lang=UA"
         print(complete_url)
-
         response = requests.get(complete_url)
         x = response.json()
         if x["cod"] != "404":
-
-            # store the value of "main"
-            # key in variable y
             y = x["main"]
-
-            # store the value corresponding
-            # to the "temp" key of y
             current_temperature = y["temp"]
-
-            # store the value corresponding
-            # to the "pressure" key of y
             current_pressure = y["pressure"]
-
-            # store the value corresponding
-            # to the "humidity" key of y
             current_humidity = y["humidity"]
-
-            # store the value of "weather"
-            # key in variable z
             z = x["weather"]
-
-            # store the value corresponding
-            # to the "description" key at
-            # the 0th index of z
             weather_description = z[0]["description"]
             weather_code = z[0]["id"]
             print(weather_description)
@@ -146,8 +121,6 @@ class Weather(QWidget):
             self.current_humidity.setText("<b>" + str(current_humidity) + ' <sup>%</sup><</b>')
             self.current_pressure.setText("<b>" + str(current_pressure) + ' <sup>hPa</sup><</b>')
             self.set_we_description(weather_code)
-
-
         else:
             print(" City Not Found ")
 
