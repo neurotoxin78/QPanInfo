@@ -40,3 +40,8 @@ def extended_exception_hook(exec_type, value, traceback):
     # Call the normal Exception hook after
     sys._excepthook(exec_type, value, traceback)
     sys.exit(1)
+
+
+def loadStylesheet(sshFile):
+    with open(sshFile, "r") as fh:
+        return fh.read()

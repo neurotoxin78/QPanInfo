@@ -6,7 +6,7 @@ from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QCompleter, QPushButton, QGridLayout,
                              QLabel, QGraphicsDropShadowEffect)
 
-from tools import get_config
+from tools import get_config, loadStylesheet
 
 
 class VLine(QFrame):
@@ -41,6 +41,8 @@ class Launcher(QWidget):
 class Weather(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        stylesheet = "weather.qss"
+        self.setStyleSheet(loadStylesheet(stylesheet))
         self.config = get_config()
         self.layout = QGridLayout()
         self.setLayout(self.layout)
@@ -54,7 +56,6 @@ class Weather(QWidget):
         self.setupUI()
 
     def setupUI(self):
-        stylesheet = "weather.qss"
         shadow1 = QGraphicsDropShadowEffect()
         shadow1.setBlurRadius(10)
         shadow2 = QGraphicsDropShadowEffect()
@@ -88,11 +89,13 @@ class Weather(QWidget):
         #self.current_temperature.setStyleSheet("background-color: rgba(125, 207, 255, 50); border-radius: 10px;")
         #self.current_humidity.setStyleSheet("background-color: rgba(203, 255, 125, 50); border-radius: 10px;")
         #self.current_pressure.setStyleSheet("background-color: rgba(233, 125, 255, 50); border-radius: 10px;")
-        self.loadStylesheet(stylesheet)
+        self.colorize()
 
-    def loadStylesheet(self, sshFile):
-        with open(sshFile, "r") as fh:
-            self.setStyleSheet(fh.read())
+
+    def colorize(self):
+        self.current_temperature.setStyleSheet("color: " + self.config['colors']['we_temperature_color'] + ";")
+        self.current_humidity.setStyleSheet("color: " + self.config['colors']['we_humidity_color'] + ";")
+        self.current_pressure.setStyleSheet("color: " + self.config['colors']['we_pressure_color'] + ";")
     def refresh(self):
         try:
             self.get_weather()

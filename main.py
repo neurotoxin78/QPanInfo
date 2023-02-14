@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QGraphicsDropShadowEff
 from pulsectl import Pulse
 from rich.console import Console
 
-from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size
+from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size, loadStylesheet
 from widgets import Launcher, Weather
 
 con = Console()
@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         stylesheet = "widget_form.qss"
-        self.loadStylesheet(stylesheet)
+        self.setStyleSheet(loadStylesheet(stylesheet))
         # creating a QGraphicsDropShadowEffect object
         shadow = QGraphicsDropShadowEffect()
         # setting blur radius
@@ -52,7 +52,8 @@ class MainWindow(QMainWindow):
         self.time_Label.setGraphicsEffect(shadow)
         # Timers
         self.weathertimer.timeout.connect(self.weatherRefresh)
-        self.weathertimer.start(self.config['intervals']['weather_fefresh_ms'])
+        we_refresh = (int(self.config['intervals']['weather_fefresh_min']) * 1024) * 60
+        self.weathertimer.start(we_refresh)
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.sensortimer.timeout.connect(self.sysStat)
@@ -82,9 +83,6 @@ class MainWindow(QMainWindow):
         except:
             self.statusBar.showMessage("Weather: ERROR", 1500)
 
-    def loadStylesheet(self, sshFile):
-        with open(sshFile, "r") as fh:
-            self.setStyleSheet(fh.read())
 
     def AppLaunch(self, command : str):
         self.process.start(command, [''])

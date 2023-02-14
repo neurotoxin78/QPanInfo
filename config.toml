@@ -1,23 +1,19 @@
 [display]
-
 output_display = 1
 
 [format]
-
 time_format = "%H:%M<sup><u>%S</u></sup>"
 
 [intervals]
-
 sys_proc_refresh_ms = 10000
 sensor_refresh_ms = 500
 clock_refresh_ms = 500
 network_refresh_ms = 5000
 cpu_temp_refresh_ms = 2000
 net_interval_ms = 1000
-weather_fefresh_ms = 1800000
+weather_fefresh_min = 10
 
 [cpu_temp]
-
 cpu_temp_sensor_path = "/sys/class/hwmon/hwmon1/temp1_input"
 
 [network]
@@ -27,3 +23,8 @@ interface = "enp39s0"
 api_key = "e7a63eca33717887514a746f7ab259f6"
 url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
 city = "Kyiv"
+
+[colors]
+we_temperature_color = "rgba(171, 219, 227, 200)"
+we_humidity_color = "rgba(234, 189, 118, 200)"
+we_pressure_color = "rgba(118, 234, 165, 200)"
