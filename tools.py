@@ -1,8 +1,13 @@
 import socket
 import sys, toml
 from rich.console import Console
+from os import listdir
+
 
 con = Console()
+
+def get_apps_list(path):
+    return listdir(path)
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

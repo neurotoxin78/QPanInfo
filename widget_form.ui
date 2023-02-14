@@ -58,20 +58,9 @@
          <layout class="QGridLayout" name="r_top_frameLayout">
           <item row="0" column="0">
            <widget class="QFrame" name="weather_frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="weather_frameLayout"/>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QFrame" name="frame">
             <property name="maximumSize">
              <size>
-              <width>200</width>
+              <width>560</width>
               <height>16777215</height>
              </size>
             </property>
@@ -81,6 +70,7 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
+            <layout class="QGridLayout" name="weather_frameLayout"/>
            </widget>
           </item>
          </layout>
@@ -110,6 +100,7 @@
              <font>
               <family>Roboto Mono for Powerline</family>
               <pointsize>16</pointsize>
+              <weight>50</weight>
               <bold>false</bold>
               <underline>false</underline>
              </font>
@@ -168,6 +159,7 @@
              <font>
               <family>DSEG14 Classic</family>
               <pointsize>80</pointsize>
+              <weight>75</weight>
               <italic>true</italic>
               <bold>true</bold>
              </font>
@@ -443,6 +435,7 @@ border-radius: 20px;</string>
              <font>
               <family>Fira Mono for Powerline</family>
               <pointsize>12</pointsize>
+              <weight>50</weight>
               <italic>false</italic>
               <bold>false</bold>
              </font>
@@ -535,6 +528,7 @@ border-radius: 20px;</string>
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -560,6 +554,7 @@ border-radius: 20px;</string>
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -584,6 +579,7 @@ border-radius: 20px;</string>
                </property>
                <property name="font">
                 <font>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -608,6 +604,7 @@ border-radius: 20px;</string>
                </property>
                <property name="font">
                 <font>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -632,6 +629,7 @@ border-radius: 20px;</string>
                </property>
                <property name="font">
                 <font>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -657,6 +655,7 @@ border-radius: 20px;</string>
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
+                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -682,8 +681,19 @@ border-radius: 20px;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

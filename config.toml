@@ -25,6 +25,6 @@ url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
 city = "Kyiv"
 
 [colors]
-we_temperature_color = "rgba(171, 219, 227, 200)"
-we_humidity_color = "rgba(234, 189, 118, 200)"
-we_pressure_color = "rgba(118, 234, 165, 200)"
+we_temperature_color = "rgba(171, 219, 227, 255)"
+we_humidity_color = "rgba(234, 189, 118, 255)"
+we_pressure_color = "rgba(118, 234, 165, 255)"

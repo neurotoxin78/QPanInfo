@@ -72,6 +72,7 @@ class MainWindow(QMainWindow):
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
         try:
+            #pass
             self.weather.get_weather()
         except:
             pass
@@ -85,7 +86,10 @@ class MainWindow(QMainWindow):
 
 
     def AppLaunch(self, command : str):
-        self.process.start(command, [''])
+        raw_cmd = command.split(sep=" ")
+        cmd = raw_cmd[0]
+        keys = raw_cmd[1:]
+        self.process.start(cmd, keys)
         self.process.started.connect(lambda: self.statusBar.showMessage("Виконано", 1500))
         self.process.finished.connect(lambda: self.statusBar.showMessage("Закрито", 1500))
         self.process.error.connect(lambda: self.statusBar.showMessage("Не виконано", 1500))
