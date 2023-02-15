@@ -32,6 +32,18 @@
     <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
    </property>
    <layout class="QGridLayout" name="centralLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>10</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QFrame" name="left_frame">
       <property name="minimumSize">
@@ -140,45 +152,7 @@
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="l_middle_frameLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="time_Label">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>680</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>DSEG14 Classic</family>
-              <pointsize>80</pointsize>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel
-{
-	color: rgb(255, 170, 127);
-}</string>
-            </property>
-            <property name="text">
-             <string>00:00</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QGridLayout" name="l_middle_frameLayout"/>
         </widget>
        </item>
       </layout>
@@ -186,6 +160,18 @@
     </item>
     <item row="0" column="1">
      <widget class="QFrame" name="right_frame">
+      <property name="minimumSize">
+       <size>
+        <width>320</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>320</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -257,6 +243,12 @@ border-radius: 20px;</string>
        </item>
        <item row="2" column="0">
         <widget class="QFrame" name="bottom_frame">
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>160</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
