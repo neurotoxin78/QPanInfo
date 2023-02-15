@@ -1,0 +1,22 @@
+/*-----QFrame----*/
+QFrame
+{
+    background-color: rgba(125, 0, 0, 160);
+    border: 2px solid green;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+
+/*-----QLabel-----*/
+QLabel
+{
+	background-color: transparent;
+	border: none;
+	color: rgb(200, 200, 200);
+
+}
+
+QDial {
+    background-color: rgba(0, 85, 127, 200);
+}

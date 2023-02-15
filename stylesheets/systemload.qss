@@ -1,0 +1,25 @@
+QFrame {
+    border: 1px rgba(85, 85, 127, 100);;
+    border-radius: 16px;
+    padding: 2px;
+    background-color: rgba(85, 85, 127, 75);
+}
+
+QLabel {
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px transparent;
+}
+
+/*-----QProgressBar-----*/
+QProgressBar
+{
+    border: solid grey;
+    border-radius: 3px;
+    color: rgb(225, 225, 225);
+    background-color: rgba(0, 0, 0, 0);
+}
+QProgressBar::chunk
+{
+    background-color: rgba(0, 170, 255, 160);
+    border-radius :6px;
+}
