@@ -1,14 +1,21 @@
-from PyQt5.QtCore import Qt, QSize, QCoreApplication
+from PyQt5.QtCore import Qt, QSize, QCoreApplication, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar, QGraphicsDropShadowEffect)
-from tools import loadStylesheet
-
+from tools import loadStylesheet, get_config, get_cputemp
+import psutil
 
 class SystemLoad(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         stylesheet = "systemload.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
+        self.config = get_config()
+        self.sensortimer = QTimer()
+        self.sensortimer.timeout.connect(self.sysStat)
+        self.sensortimer.start(self.config['intervals']['sensor_refresh_ms'])
+        self.temptimer = QTimer()
+        self.temptimer.timeout.connect(self.tempStat)
+        self.temptimer.start(self.config['intervals']['cpu_temp_refresh_ms'])
         font = QFont()
         font.setFamily("Roboto Mono for Powerline")
         font.setPointSize(16)
@@ -83,3 +90,14 @@ class SystemLoad(QWidget):
         self.cpuBar.setGraphicsEffect(shadow1)
         self.ramBar.setGraphicsEffect(shadow2)
         self.tempBar.setGraphicsEffect(shadow3)
+
+    def sysStat(self):
+        self.ramBar.setValue(int(psutil.virtual_memory().percent))
+        self.cpuBar.setMaximum(100)
+        self.cpuBar.setValue(int(psutil.cpu_percent()))
+
+    def tempStat(self):
+        temp = get_cputemp(self.config['cpu_temp']['cpu_temp_sensor_path'])
+        self.tempBar.setMaximum(100 * 100)
+        self.tempBar.setValue(int(temp) * 100)
+        self.tempBar.setFormat("%.01f °C" % temp)

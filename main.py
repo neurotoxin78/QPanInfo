@@ -1,6 +1,6 @@
 import gc
 import sys
-from datetime import datetime
+
 
 import psutil
 from PyQt5 import QtWidgets, uic
@@ -33,14 +33,10 @@ class MainWindow(QMainWindow):
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.process = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
-        self.weathertimer = QTimer()
         self.systimer = QTimer()
-        self.clocktimer = QTimer()
-        self.sensortimer = QTimer()
-        self.temptimer = QTimer()
         self.ipchecktimer = QTimer()
-        self.nettimer = QTimer()
-        self.io = psutil.net_io_counters(pernic=True)
+
+
         self.top_frame.setStyleSheet(loadStylesheet("systemload.qss"))
         self.middle_frame.setStyleSheet(loadStylesheet("systemload.qss"))
         self.bottom_frame.setStyleSheet(loadStylesheet("systemload.qss"))
@@ -58,8 +54,6 @@ class MainWindow(QMainWindow):
         self.initUI()
         self.shadowize(blurradius=50)
         self.systemProcess()
-        self.volume_dial_set()
-        self.volumeControl.volume_dial.valueChanged.connect(self.volume_change)
 
     def shadowize(self, blurradius=10):
         self.blurRadius = blurradius
@@ -76,27 +70,10 @@ class MainWindow(QMainWindow):
     def initUI(self):
         stylesheet = "widget_form.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
-        # creating a QGraphicsDropShadowEffect object
-        shadow = QGraphicsDropShadowEffect()
-        # setting blur radius
-        shadow.setBlurRadius(15)
-        self.clock.time_Label.setGraphicsEffect(shadow)
-        # Timers
-        self.weathertimer.timeout.connect(self.weatherRefresh)
-        we_refresh = (int(self.config['intervals']['weather_fefresh_min']) * 1024) * 60
-        self.weathertimer.start(we_refresh)
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
-        self.sensortimer.timeout.connect(self.sysStat)
-        self.sensortimer.start(self.config['intervals']['sensor_refresh_ms'])
-        self.clocktimer.timeout.connect(self.Clock)
-        self.clocktimer.start(self.config['intervals']['clock_refresh_ms'])
         self.ipchecktimer.timeout.connect(self.CheckIP)
         self.ipchecktimer.start(self.config['intervals']['network_refresh_ms'])
-        self.temptimer.timeout.connect(self.tempStat)
-        self.temptimer.start(self.config['intervals']['cpu_temp_refresh_ms'])
-        self.nettimer.timeout.connect(self.netStat)
-        self.nettimer.start(self.config['intervals']['net_interval_ms'])
         self.appBtn.clicked.connect(self.app_click)
         self.networkLoad.ipLabel.setText("Мережа не підключена")
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
@@ -107,14 +84,6 @@ class MainWindow(QMainWindow):
             self.weather.get_weather()
         except:
             pass
-
-    def weatherRefresh(self):
-        try:
-            self.weather.get_weather()
-            self.statusBar.showMessage("Weather data refreshed", 1500)
-        except:
-            self.statusBar.showMessage("Weather: ERROR", 1500)
-
 
     def AppLaunch(self, command : str):
         raw_cmd = command.split(sep=" ")
@@ -140,62 +109,9 @@ class MainWindow(QMainWindow):
         gc.collect()
         self.statusBar.showMessage("Вивільнення пам'яті...", self.config['intervals']['statusbar_msg_time_ms'])
 
-    def volume_dial_set(self):
-        try:
-            with Pulse('volume-get-value') as pulse:
-                sink_input = pulse.sink_input_list()[0]  # first random sink-input stream
-                volume = sink_input.volume
-                volume_value = int(volume.value_flat * 100)  # average level across channels (float)
-            self.volumeControl.volume_dial.setValue(volume_value)
-            self.volumeControl.volume_label.setText(str(int(volume_value)) + '%')
-        except:
-            pass
-
-    def volume_change(self):
-        volume_value = self.volumeControl.volume_dial.value() / 100
-        # print(volume_val)
-        try:
-            with Pulse('volume-changer') as pulse:
-                sink_input = pulse.sink_input_list()[0]  # first random sink-input stream
-                volume = sink_input.volume
-                volume.value_flat = volume_value  # sets all volume.values to 0.3
-                pulse.volume_set(sink_input, volume)  # applies the change
-                self.volumeControl.volume_label.setText(str(int(volume_value * 100)) + '%')
-        except:
-            pass
-
 
     def CheckIP(self):
         self.networkLoad.ipLabel.setText('IP: ' + get_ip())
-
-    def Clock(self):
-        now = datetime.now()
-        current_time = now.strftime(self.config['format']['time_format'])
-        self.clock.time_Label.setText(current_time)  # u'\u2770' + + u'\u2771'
-
-    def sysStat(self):
-        self.systemLoad.ramBar.setValue(int(psutil.virtual_memory().percent))
-        self.systemLoad.cpuBar.setMaximum(100)
-        self.systemLoad.cpuBar.setValue(int(psutil.cpu_percent()))
-
-
-    def tempStat(self):
-        temp = get_cputemp(self.config['cpu_temp']['cpu_temp_sensor_path'])
-        self.systemLoad.tempBar.setMaximum(100 * 100)
-        self.systemLoad.tempBar.setValue(int(temp) * 100)
-        self.systemLoad.tempBar.setFormat("%.01f °C" % temp)
-
-
-    def netStat(self):
-        io_2 = psutil.net_io_counters(pernic=True)
-        iface = self.config['network']['interface']
-        iface_io = self.io[iface]
-        upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
-            io_2[iface].bytes_recv - iface_io.bytes_recv
-        self.networkLoad.interfaceLabel.setText("інтерфейс: " + iface)
-        self.networkLoad.upLabel.setText(f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
-        self.networkLoad.dnLabel.setText(f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
-        self.io = io_2
 
 
 def main():

@@ -1,5 +1,5 @@
 import requests
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel, QGraphicsDropShadowEffect)
 from tools import get_config, loadStylesheet
@@ -11,6 +11,10 @@ class Weather(QWidget):
         stylesheet = "weather.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.config = get_config()
+        self.weathertimer = QTimer()
+        self.weathertimer.timeout.connect(self.refresh)
+        we_refresh = (int(self.config['intervals']['weather_fefresh_min']) * 1024) * 60
+        self.weathertimer.start(we_refresh)
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.we_condition = QPushButton()

@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QHBoxLayout, QLabel, QDial)
-
+from pulsectl import Pulse
 from tools import loadStylesheet
 
 
@@ -34,3 +34,29 @@ class VolumeControl(QWidget):
         self.volume_dial.setObjectName("volume_dial")
         self.volume_frameLayout.addWidget(self.volume_dial)
         self.setLayout(self.volume_frameLayout)
+        self.volume_dial_set()
+        self.volume_dial.valueChanged.connect(self.volume_change)
+
+    def volume_dial_set(self):
+        try:
+            with Pulse('volume-get-value') as pulse:
+                sink_input = pulse.sink_input_list()[0]  # first random sink-input stream
+                volume = sink_input.volume
+                volume_value = int(volume.value_flat * 100)  # average level across channels (float)
+            self.volume_dial.setValue(volume_value)
+            self.volume_label.setText(str(int(volume_value)) + '%')
+        except:
+            pass
+
+    def volume_change(self):
+        volume_value = self.volume_dial.value() / 100
+        # print(volume_val)
+        try:
+            with Pulse('volume-changer') as pulse:
+                sink_input = pulse.sink_input_list()[0]  # first random sink-input stream
+                volume = sink_input.volume
+                volume.value_flat = volume_value  # sets all volume.values to 0.3
+                pulse.volume_set(sink_input, volume)  # applies the change
+                self.volume_label.setText(str(int(volume_value * 100)) + '%')
+        except:
+            pass

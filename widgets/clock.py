@@ -1,13 +1,19 @@
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon, QFont, QPixmap
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel, QGraphicsDropShadowEffect)
+from PyQt5.QtCore import Qt, QSize, QTimer
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import (QWidget, QGridLayout, QLabel, QGraphicsDropShadowEffect)
+from datetime import datetime
 from tools import get_config, loadStylesheet
+
 
 class Clock(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         stylesheet = "weather.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
+        self.config = get_config()
+        self.clocktimer = QTimer()
+        self.clocktimer.timeout.connect(self.Clock)
+        self.clocktimer.start(self.config['intervals']['clock_refresh_ms'])
         self.config = get_config()
         self.layout = QGridLayout()
         self.time_Label = QLabel()
@@ -25,3 +31,12 @@ class Clock(QWidget):
         self.time_Label.setObjectName("time_Label")
         self.layout.addWidget(self.time_Label, 0, 5, 1, 1, Qt.AlignCenter)
         self.setLayout(self.layout)
+        shadow = QGraphicsDropShadowEffect()
+        # setting blur radius
+        shadow.setBlurRadius(15)
+        self.time_Label.setGraphicsEffect(shadow)
+
+    def Clock(self):
+        now = datetime.now()
+        current_time = now.strftime(self.config['format']['time_format'])
+        self.time_Label.setText(current_time)  # u'\u2770' + + u'\u2771'
