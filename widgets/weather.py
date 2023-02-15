@@ -38,7 +38,7 @@ class Weather(QWidget):
         self.layout.addWidget(self.current_humidity, 1, 3)
         self.layout.addWidget(self.pres_img, 1, 4)
         self.layout.addWidget(self.current_pressure, 1, 5)
-        self.layout.addWidget(self.we_condition_description, 0, 3, 3, 3, Qt.AlignCenter)
+        self.layout.addWidget(self.we_condition_description, 0, 2, 1, 3, Qt.AlignCenter)
         self.we_condition_description.setFont(QFont('Noto Sans', 20))
         self.we_condition_description.setAlignment(Qt.AlignCenter | Qt.AlignCenter)
         self.we_condition_description.setGeometry(0, 0, 20, 150)
