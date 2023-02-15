@@ -1,8 +1,6 @@
 from PyQt5.QtCore import Qt, QSize, QCoreApplication
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout,
-                             QLabel, QProgressBar)
-
+from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar)
 from tools import loadStylesheet
 
 

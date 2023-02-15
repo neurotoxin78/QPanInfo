@@ -13,6 +13,8 @@ from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_
 from widgets.launcher import Launcher
 from widgets.systemload import SystemLoad
 from widgets.weather import Weather
+from widgets.networkload import NetworkLoad
+from widgets.volume import VolumeControl
 
 con = Console()
 
@@ -37,15 +39,19 @@ class MainWindow(QMainWindow):
         self.temptimer = QTimer()
         self.ipchecktimer = QTimer()
         self.nettimer = QTimer()
-        self.volume_dial_set()
-        self.volume_dial.valueChanged.connect(self.volume_change)
         self.io = psutil.net_io_counters(pernic=True)
         self.launcher = Launcher()
         self.weather = Weather()
         self.systemLoad = SystemLoad()
+        self.networkLoad = NetworkLoad()
+        self.volumeControl = VolumeControl()
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
+        self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
+        self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
         self.initUI()
         self.systemProcess()
+        self.volume_dial_set()
+        self.volumeControl.volume_dial.valueChanged.connect(self.volume_change)
 
     def initUI(self):
         stylesheet = "widget_form.qss"
@@ -72,7 +78,7 @@ class MainWindow(QMainWindow):
         self.nettimer.timeout.connect(self.netStat)
         self.nettimer.start(self.config['intervals']['net_interval_ms'])
         self.appBtn.clicked.connect(self.app_click)
-        self.ipLabel.setText("Мережа не підключена")
+        self.networkLoad.ipLabel.setText("Мережа не підключена")
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
@@ -120,13 +126,13 @@ class MainWindow(QMainWindow):
                 sink_input = pulse.sink_input_list()[0]  # first random sink-input stream
                 volume = sink_input.volume
                 volume_value = int(volume.value_flat * 100)  # average level across channels (float)
-            self.volume_dial.setValue(volume_value)
-            self.volume_label.setText("Гучність " + str(int(volume_value)) + '%')
+            self.volumeControl.volume_dial.setValue(volume_value)
+            self.volumeControl.volume_label.setText(str(int(volume_value)) + '%')
         except:
             pass
 
     def volume_change(self):
-        volume_value = self.volume_dial.value() / 100
+        volume_value = self.volumeControl.volume_dial.value() / 100
         # print(volume_val)
         try:
             with Pulse('volume-changer') as pulse:
@@ -134,13 +140,13 @@ class MainWindow(QMainWindow):
                 volume = sink_input.volume
                 volume.value_flat = volume_value  # sets all volume.values to 0.3
                 pulse.volume_set(sink_input, volume)  # applies the change
-                self.volume_label.setText("Гучність " + str(int(volume_value * 100)) + '%')
+                self.volumeControl.volume_label.setText(str(int(volume_value * 100)) + '%')
         except:
             pass
 
 
     def CheckIP(self):
-        self.ipLabel.setText('IP: ' + get_ip())
+        self.networkLoad.ipLabel.setText('IP: ' + get_ip())
 
     def Clock(self):
         now = datetime.now()
@@ -166,9 +172,9 @@ class MainWindow(QMainWindow):
         iface_io = self.io[iface]
         upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
             io_2[iface].bytes_recv - iface_io.bytes_recv
-        self.interfaceLabel.setText("інтерфейс: " + iface)
-        self.upLabel.setText(f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
-        self.dnLabel.setText(f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
+        self.networkLoad.interfaceLabel.setText("інтерфейс: " + iface)
+        self.networkLoad.upLabel.setText(f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
+        self.networkLoad.dnLabel.setText(f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
         self.io = io_2
 
 

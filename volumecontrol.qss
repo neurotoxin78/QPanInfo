@@ -17,16 +17,6 @@ QLabel
 
 }
 
-/*-----QProgressBar-----*/
-QProgressBar
-{
-    border: solid grey;
-    border-radius: 3px;
-    color: rgb(225, 225, 225);
-    background-color: rgba(0, 0, 0, 0);
-}
-QProgressBar::chunk
-{
-    background-color: rgba(0, 170, 255, 160);
-    border-radius :6px;
+QDial {
+    background-color: rgba(0, 85, 127, 200);
 }
