@@ -1,14 +1,16 @@
+from datetime import datetime
+
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QWidget, QGridLayout, QLabel, QGraphicsDropShadowEffect)
-from datetime import datetime
+
 from tools import get_config, loadStylesheet
 
 
 class Clock(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        stylesheet = "weather.qss"
+        stylesheet = "stylesheets/weather.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.config = get_config()
         self.clocktimer = QTimer()

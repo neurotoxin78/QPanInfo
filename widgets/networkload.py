@@ -1,14 +1,15 @@
+import psutil
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel)
-from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size, loadStylesheet
-import psutil
+
+from tools import get_config, get_size, loadStylesheet
 
 
 class NetworkLoad(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        stylesheet = "networkload.qss"
+        stylesheet = "stylesheets/networkload.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.config = get_config()
         self.io = psutil.net_io_counters(pernic=True)

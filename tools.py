@@ -1,8 +1,9 @@
 import socket
-import sys, toml
-from rich.console import Console
+import sys
+import toml
 from os import listdir
 
+from rich.console import Console
 
 con = Console()
 

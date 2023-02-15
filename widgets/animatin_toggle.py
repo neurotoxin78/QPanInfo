@@ -2,9 +2,8 @@ from PyQt5.QtCore import (
     Qt, QSize, QPoint, QPointF, QRectF,
     QEasingCurve, QPropertyAnimation, QSequentialAnimationGroup,
     pyqtSlot, pyqtProperty)
-
-from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtGui import QColor, QBrush, QPaintEvent, QPen, QPainter
+from PyQt5.QtWidgets import QCheckBox
 
 
 class AnimatedToggle(QCheckBox):

@@ -11,7 +11,7 @@ class Launcher(QWidget):
         super(Launcher, self).__init__(*args, **kwargs)
         # Load the UI Page
         self.config = get_config()
-        uic.loadUi('launcher.ui', self)
+        uic.loadUi('ui/launcher.ui', self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint) # | Qt.WindowModal)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setAttribute(Qt.WA_NoSystemBackground, True)

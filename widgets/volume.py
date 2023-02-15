@@ -8,7 +8,7 @@ from tools import loadStylesheet
 class VolumeControl(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        stylesheet = "volumecontrol.qss"
+        stylesheet = "stylesheets/volumecontrol.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.volume_frame = QFrame()
         self.volume_frame.setMaximumSize(QSize(16777215, 135))
@@ -20,8 +20,8 @@ class VolumeControl(QWidget):
         self.volume_label = QLabel(self.volume_frame)
         self.volume_label.setMaximumSize(QSize(120, 32))
         font = QFont()
-        font.setFamily("Fira Mono for Powerline")
-        font.setPointSize(16)
+        font.setFamily("DSEG14 Classic")
+        font.setPointSize(20)
         font.setBold(True)
         font.setItalic(False)
         #font.setWeight(50)

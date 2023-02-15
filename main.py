@@ -1,21 +1,18 @@
 import gc
 import sys
 
-
-import psutil
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer, QProcess
 from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QGraphicsDropShadowEffect)
-from pulsectl import Pulse
 from rich.console import Console
 
-from tools import get_ip, extended_exception_hook, get_cputemp, get_config, get_size, loadStylesheet
-from widgets.launcher import Launcher
-from widgets.systemload import SystemLoad
-from widgets.weather import Weather
-from widgets.networkload import NetworkLoad
-from widgets.volume import VolumeControl
+from tools import get_ip, extended_exception_hook, get_config, loadStylesheet
 from widgets.clock import Clock
+from widgets.launcher import Launcher
+from widgets.networkload import NetworkLoad
+from widgets.systemload import SystemLoad
+from widgets.volume import VolumeControl
+from widgets.weather import Weather
 
 con = Console()
 
@@ -25,8 +22,8 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load the UI Page
         self.config = get_config()
-        uic.loadUi('main_form.ui', self)
-        self.setWindowTitle("Blackout PC Launcher")
+        uic.loadUi('ui/panel.ui', self)
+        self.setWindowTitle("QPanInfo")
         self.setWindowFlags(Qt.FramelessWindowHint
                             | Qt.Tool | Qt.WindowStaysOnBottomHint
                             )
@@ -37,9 +34,9 @@ class MainWindow(QMainWindow):
         self.ipchecktimer = QTimer()
 
 
-        self.top_frame.setStyleSheet(loadStylesheet("systemload.qss"))
-        self.middle_frame.setStyleSheet(loadStylesheet("systemload.qss"))
-        self.bottom_frame.setStyleSheet(loadStylesheet("systemload.qss"))
+        self.top_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
+        self.middle_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
+        self.bottom_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
         self.launcher = Launcher()
         self.weather = Weather()
         self.systemLoad = SystemLoad()
@@ -55,20 +52,8 @@ class MainWindow(QMainWindow):
         self.shadowize(blurradius=50)
         self.systemProcess()
 
-    def shadowize(self, blurradius=10):
-        self.blurRadius = blurradius
-        shadow_top = QGraphicsDropShadowEffect()
-        shadow_top.setBlurRadius(self.blurRadius)
-        shadow_middle = QGraphicsDropShadowEffect()
-        shadow_middle.setBlurRadius(self.blurRadius)
-        shadow_bottom = QGraphicsDropShadowEffect()
-        shadow_bottom.setBlurRadius(self.blurRadius)
-        self.top_frame.setGraphicsEffect(shadow_top)
-        self.middle_frame.setGraphicsEffect(shadow_middle)
-        self.bottom_frame.setGraphicsEffect(shadow_bottom)
-
     def initUI(self):
-        stylesheet = "widget_form.qss"
+        stylesheet = "stylesheets/panel.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
@@ -84,6 +69,18 @@ class MainWindow(QMainWindow):
             self.weather.get_weather()
         except:
             pass
+
+    def shadowize(self, blurradius=10):
+        self.blurRadius = blurradius
+        shadow_top = QGraphicsDropShadowEffect()
+        shadow_top.setBlurRadius(self.blurRadius)
+        shadow_middle = QGraphicsDropShadowEffect()
+        shadow_middle.setBlurRadius(self.blurRadius)
+        shadow_bottom = QGraphicsDropShadowEffect()
+        shadow_bottom.setBlurRadius(self.blurRadius)
+        self.top_frame.setGraphicsEffect(shadow_top)
+        self.middle_frame.setGraphicsEffect(shadow_middle)
+        self.bottom_frame.setGraphicsEffect(shadow_bottom)
 
     def AppLaunch(self, command : str):
         raw_cmd = command.split(sep=" ")
