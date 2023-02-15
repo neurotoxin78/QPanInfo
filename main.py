@@ -15,6 +15,7 @@ from widgets.systemload import SystemLoad
 from widgets.weather import Weather
 from widgets.networkload import NetworkLoad
 from widgets.volume import VolumeControl
+from widgets.clock import Clock
 
 con = Console()
 
@@ -40,18 +41,37 @@ class MainWindow(QMainWindow):
         self.ipchecktimer = QTimer()
         self.nettimer = QTimer()
         self.io = psutil.net_io_counters(pernic=True)
+        self.top_frame.setStyleSheet(loadStylesheet("systemload.qss"))
+        self.middle_frame.setStyleSheet(loadStylesheet("systemload.qss"))
+        self.bottom_frame.setStyleSheet(loadStylesheet("systemload.qss"))
         self.launcher = Launcher()
         self.weather = Weather()
         self.systemLoad = SystemLoad()
         self.networkLoad = NetworkLoad()
         self.volumeControl = VolumeControl()
+        self.clock = Clock()
+        self.l_middle_frameLayout.addWidget(self.clock, 0, 0)
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
         self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
+        #self.right_frame.setStyleSheet("border: 1px solid green; border-radius: 20px;")
         self.initUI()
+        self.shadowize(blurradius=50)
         self.systemProcess()
         self.volume_dial_set()
         self.volumeControl.volume_dial.valueChanged.connect(self.volume_change)
+
+    def shadowize(self, blurradius=10):
+        self.blurRadius = blurradius
+        shadow_top = QGraphicsDropShadowEffect()
+        shadow_top.setBlurRadius(self.blurRadius)
+        shadow_middle = QGraphicsDropShadowEffect()
+        shadow_middle.setBlurRadius(self.blurRadius)
+        shadow_bottom = QGraphicsDropShadowEffect()
+        shadow_bottom.setBlurRadius(self.blurRadius)
+        self.top_frame.setGraphicsEffect(shadow_top)
+        self.middle_frame.setGraphicsEffect(shadow_middle)
+        self.bottom_frame.setGraphicsEffect(shadow_bottom)
 
     def initUI(self):
         stylesheet = "widget_form.qss"
@@ -60,7 +80,7 @@ class MainWindow(QMainWindow):
         shadow = QGraphicsDropShadowEffect()
         # setting blur radius
         shadow.setBlurRadius(15)
-        self.time_Label.setGraphicsEffect(shadow)
+        self.clock.time_Label.setGraphicsEffect(shadow)
         # Timers
         self.weathertimer.timeout.connect(self.weatherRefresh)
         we_refresh = (int(self.config['intervals']['weather_fefresh_min']) * 1024) * 60
@@ -151,7 +171,7 @@ class MainWindow(QMainWindow):
     def Clock(self):
         now = datetime.now()
         current_time = now.strftime(self.config['format']['time_format'])
-        self.time_Label.setText(current_time)  # u'\u2770' + + u'\u2771'
+        self.clock.time_Label.setText(current_time)  # u'\u2770' + + u'\u2771'
 
     def sysStat(self):
         self.systemLoad.ramBar.setValue(int(psutil.virtual_memory().percent))
@@ -183,6 +203,7 @@ def main():
     sys._excepthook = sys.excepthook
     sys.excepthook = extended_exception_hook
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyle(QtWidgets.QStyleFactory.create("fusion"))
     main_window = MainWindow()
     monitor = QDesktopWidget().screenGeometry(config['display']['output_display'])
     main_window.move(monitor.left(), monitor.top())

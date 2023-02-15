@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt, QSize, QCoreApplication
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar)
+from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar, QGraphicsDropShadowEffect)
 from tools import loadStylesheet
 
 
@@ -18,8 +18,9 @@ class SystemLoad(QWidget):
         self.sensor_frame = QFrame()
         self.sensor_frame.setMinimumSize(QSize(0, 135))
         self.sensor_frame.setMaximumSize(QSize(16777215, 135))
-        self.sensor_frame.setFrameShape(QFrame.NoFrame)
-        self.sensor_frame.setFrameShadow(QFrame.Raised)
+        self.sensor_frame.setStyleSheet("background-color: rgba(85, 85, 127, 160);")
+        #self.sensor_frame.setFrameShape(QFrame.NoFrame)
+        #self.sensor_frame.setFrameShadow(QFrame.Raised)
         self.sensor_frame.setObjectName("sensor_frame")
         self.sensor_frameLayout = QGridLayout(self.sensor_frame)
         self.sensor_frameLayout.setObjectName("sensor_frameLayout")
@@ -62,6 +63,7 @@ class SystemLoad(QWidget):
         self.sensor_frameLayout.addWidget(self.tempBar, 2, 1, 1, 1)
         self.setLayout(self.sensor_frameLayout)
         self.retranslateUi(SystemLoad)
+        self.shadowize()
 
     def retranslateUi(self, SystemLoad):
         _translate = QCoreApplication.translate
@@ -69,3 +71,15 @@ class SystemLoad(QWidget):
         self.ramLabel.setText(_translate("SystemLoad", "RAM:"))
         self.cpu_tempLabel.setText(_translate("SystemLoad", "t°C:"))
         self.tempBar.setFormat(_translate("SystemLoad", "%p%°C"))
+
+    def shadowize(self):
+        self.blurRadius = 15
+        shadow1 = QGraphicsDropShadowEffect()
+        shadow1.setBlurRadius(self.blurRadius)
+        shadow2 = QGraphicsDropShadowEffect()
+        shadow2.setBlurRadius(self.blurRadius)
+        shadow3 = QGraphicsDropShadowEffect()
+        shadow3.setBlurRadius(self.blurRadius)
+        self.cpuBar.setGraphicsEffect(shadow1)
+        self.ramBar.setGraphicsEffect(shadow2)
+        self.tempBar.setGraphicsEffect(shadow3)
