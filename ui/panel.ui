@@ -73,7 +73,7 @@
             <property name="maximumSize">
              <size>
               <width>560</width>
-              <height>16777215</height>
+              <height>160</height>
              </size>
             </property>
             <property name="frameShape">
@@ -112,7 +112,6 @@
              <font>
               <family>Roboto Mono for Powerline</family>
               <pointsize>16</pointsize>
-              <weight>50</weight>
               <bold>false</bold>
               <underline>false</underline>
              </font>

@@ -2,8 +2,9 @@ import gc
 import sys
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import Qt, QTimer, QProcess
+from PyQt5.QtCore import Qt, QTimer, QProcess, QEvent
 from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QGraphicsDropShadowEffect)
+from PyQt5.QtGui import QMouseEvent
 from rich.console import Console
 
 from tools import get_ip, extended_exception_hook, get_config, loadStylesheet
@@ -37,6 +38,7 @@ class MainWindow(QMainWindow):
         self.top_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
         self.middle_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
         self.bottom_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
+        self.weather_frame.setStyleSheet(loadStylesheet("stylesheets/weather.qss"))
         self.launcher = Launcher()
         self.weather = Weather()
         self.systemLoad = SystemLoad()
@@ -78,9 +80,12 @@ class MainWindow(QMainWindow):
         shadow_middle.setBlurRadius(self.blurRadius)
         shadow_bottom = QGraphicsDropShadowEffect()
         shadow_bottom.setBlurRadius(self.blurRadius)
+        shadow_weather = QGraphicsDropShadowEffect()
+        shadow_weather.setBlurRadius(self.blurRadius)
         self.top_frame.setGraphicsEffect(shadow_top)
         self.middle_frame.setGraphicsEffect(shadow_middle)
         self.bottom_frame.setGraphicsEffect(shadow_bottom)
+        self.weather_frame.setGraphicsEffect(shadow_weather)
 
     def AppLaunch(self, command : str):
         raw_cmd = command.split(sep=" ")

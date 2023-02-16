@@ -51,3 +51,12 @@ def extended_exception_hook(exec_type, value, traceback):
 def loadStylesheet(sshFile):
     with open(sshFile, "r") as fh:
         return fh.read()
+
+def degrees_to_cardinal(d):
+    '''
+    note: this is highly approximate...
+    '''
+    dirs = ["Північний", "NNE", "ПнЗахідний", "ENE", "Східний", "ESE", "ПдЗахідний", "SSE",
+            "Південний", "SSW", "ПдСхідний", "WSW", "Західний", "WNW", "ПнСхідний", "NNW"]
+    ix = int((d + 11.25)/22.5)
+    return dirs[ix % 16]

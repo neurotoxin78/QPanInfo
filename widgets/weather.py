@@ -2,7 +2,7 @@ import requests
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel, QGraphicsDropShadowEffect)
-from tools import get_config, loadStylesheet
+from tools import get_config, loadStylesheet, degrees_to_cardinal
 
 
 class Weather(QWidget):
@@ -24,34 +24,43 @@ class Weather(QWidget):
         self.temp_img = QLabel()
         self.humi_img = QLabel()
         self.pres_img = QLabel()
+        self.wind_speed = QLabel()
+        self.wind_dir = QLabel()
         self.current_temperature = QLabel()
         self.current_humidity = QLabel()
         self.current_pressure = QLabel()
-        self.temp_img.setPixmap(QPixmap('images/temperature-32.png'))
+        self.temp_img.setPixmap(QPixmap('images/thermometer-white-32.png'))
         self.humi_img.setPixmap(QPixmap('images/humidity-32.png'))
         self.pres_img.setPixmap(QPixmap('images/pressure-32.png'))
         self.setupUI()
 
     def setupUI(self):
-        self.layout.addWidget(self.we_condition, 0, 5, 1, 1, Qt.AlignCenter)
         self.we_condition.setIconSize(QSize(96, 96))
         self.we_condition.clicked.connect(self.refresh)
-        self.layout.addWidget(self.temp_img, 1, 0)
-        self.layout.addWidget(self.current_temperature, 1, 1)
-        self.layout.addWidget(self.humi_img, 1, 2)
-        self.layout.addWidget(self.current_humidity, 1, 3)
-        self.layout.addWidget(self.pres_img, 1, 4)
-        self.layout.addWidget(self.current_pressure, 1, 5)
+        self.layout.addWidget(self.we_condition, 0, 5, 2, 3, Qt.AlignCenter)
+        self.layout.addWidget(self.wind_speed, 1, 0, 1, 3, Qt.AlignCenter)
+        self.layout.addWidget(self.wind_dir, 1, 2, 1, 3, Qt.AlignCenter)
         self.layout.addWidget(self.we_condition_description, 0, 2, 1, 3, Qt.AlignCenter)
-        self.we_condition_description.setFont(QFont('Noto Sans', 22))
-        self.we_condition_description.setAlignment(Qt.AlignCenter | Qt.AlignCenter)
+        self.layout.addWidget(self.temp_img, 3, 0)
+        self.layout.addWidget(self.current_temperature, 3, 1)
+        self.layout.addWidget(self.humi_img, 3, 2)
+        self.layout.addWidget(self.current_humidity, 3, 3)
+        self.layout.addWidget(self.pres_img, 3, 4)
+        self.layout.addWidget(self.current_pressure, 3, 5)
+
+        self.we_condition_description.setFont(QFont('Noto Sans', 20))
+        self.we_condition_description.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         self.we_condition_description.setGeometry(0, 0, 20, 150)
         self.current_temperature.setFont(QFont('Noto Sans', 22))
         self.current_humidity.setFont(QFont('Noto Sans', 22))
         self.current_pressure.setFont(QFont('Noto Sans', 22))
-        self.current_temperature.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
-        self.current_humidity.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
-        self.current_pressure.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        self.wind_speed.setFont(QFont('Noto Sans', 20))
+        self.wind_speed.setAlignment(Qt.AlignRight)
+        self.wind_dir.setFont(QFont('Noto Sans', 14))
+        self.wind_dir.setAlignment(Qt.AlignLeft)
+        self.current_temperature.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+        self.current_humidity.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+        self.current_pressure.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         self.shadowize(blurradius=20)
         self.colorize()
 
@@ -71,7 +80,11 @@ class Weather(QWidget):
         shadow7 = QGraphicsDropShadowEffect()
         shadow7.setBlurRadius(blurradius)
         shadow8 = QGraphicsDropShadowEffect()
-        shadow8.setBlurRadius(blurradius)
+        shadow8.setBlurRadius(blurradius + 10)
+        shadow9 = QGraphicsDropShadowEffect()
+        shadow9.setBlurRadius(blurradius)
+        shadow10 = QGraphicsDropShadowEffect()
+        shadow10.setBlurRadius(blurradius)
         self.we_condition_description.setGraphicsEffect(shadow8)
         self.current_temperature.setGraphicsEffect(shadow1)
         self.current_humidity.setGraphicsEffect(shadow2)
@@ -80,12 +93,16 @@ class Weather(QWidget):
         self.temp_img.setGraphicsEffect(shadow5)
         self.humi_img.setGraphicsEffect(shadow6)
         self.pres_img.setGraphicsEffect(shadow7)
-
+        self.wind_speed.setGraphicsEffect(shadow9)
+        self.wind_dir.setGraphicsEffect(shadow10)
     def colorize(self):
         self.current_temperature.setStyleSheet("color: " + self.config['colors']['we_temperature_color'] + ";")
         self.current_humidity.setStyleSheet("color: " + self.config['colors']['we_humidity_color'] + ";")
         self.current_pressure.setStyleSheet("color: " + self.config['colors']['we_pressure_color'] + ";")
         self.we_condition_description.setStyleSheet("color: " + self.config['colors']['we_condition_color'] + ";")
+        self.wind_speed.setStyleSheet("color: " + self.config['colors']['we_wind_speed_color'] + ";")
+        self.wind_dir.setStyleSheet("color: " + self.config['colors']['we_wind_dir_color'] + ";")
+
     def refresh(self):
         try:
             self.get_weather()
@@ -109,11 +126,16 @@ class Weather(QWidget):
             weather_description = z[0]["description"]
             weather_code = z[0]["id"]
             print(weather_description)
-            self.we_condition_description.setText(weather_description)
+            w = x["wind"]
+            wind_speed = w["speed"]
+            wind_dir = degrees_to_cardinal(w["deg"])
+            self.we_condition_description.setText("| " + weather_description + " |")
             self.current_temperature.setText("<b>" + str(current_temperature) + ' <sup>°C</sup></b>  ')
             self.current_humidity.setText("<b>" + str(current_humidity) + ' <sup>%</sup><</b>  ')
             self.current_pressure.setText("<b>" + str(current_pressure) + ' <sup>hPa</sup><</b>  ')
             self.set_we_description(weather_code)
+            self.wind_speed.setText(' <b>вітер: ' + str(wind_speed) + ' <sup>м/c</sup></b>  ')
+            self.wind_dir.setText("  <b>"+ str(wind_dir) + '</b>  ')
         else:
             print(" City Not Found ")
 
