@@ -1,9 +1,56 @@
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import (QWidget, QCompleter)
+from PyQt5.QtCore import Qt, QSize, QProcess, pyqtSlot
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import (QDesktopWidget, QWidget, QCompleter, QFrame, QGridLayout, QPushButton)
 
 from tools import get_config, get_apps_list
+
+
+class LaunchButton(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(LaunchButton, self).__init__(*args, **kwargs)
+        # Load the UI Page
+        self.config = get_config()
+        self.launcher = Launcher()
+        self.process = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
+        self.launch_frame = QFrame()
+        self.launch_frame.setMinimumSize(QSize(0, 100))
+        self.launch_frame.setMaximumSize(QSize(16777215, 140))
+        self.launch_frame.setFrameShape(QFrame.StyledPanel)
+        self.launch_frame.setFrameShadow(QFrame.Raised)
+        self.launch_frame.setObjectName("launch_frame")
+        self.launch_frame_frameLayout = QGridLayout(self.launch_frame)
+        self.launch_frame_frameLayout.setObjectName("net_frameLayout")
+        font = QFont()
+        font.setFamily("Roboto Mono for Powerline")
+        font.setPointSize(20)
+        font.setBold(False)
+        font.setUnderline(False)
+        font.setWeight(50)
+        self.appBtn = QPushButton()
+        self.appBtn.setFont(font)
+        self.appBtn.setText("Виконати")
+        self.appBtn.setIcon(QIcon.fromTheme("applications-other"))
+        self.appBtn.setIconSize(QSize(28, 28))
+        self.appBtn.clicked.connect(self.app_click)
+        self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
+        self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
+        self.launch_frame_frameLayout.addWidget(self.appBtn, 0, 0)
+        self.setLayout(self.launch_frame_frameLayout)
+    def app_click(self):
+        monitor = QDesktopWidget().screenGeometry(self.config['display']['output_display'])
+        self.launcher.move(monitor.left(), monitor.top())
+        self.launcher.show()
+
+    def AppLaunch(self, command : str):
+        raw_cmd = command.split(sep=" ")
+        cmd = raw_cmd[0]
+        keys = raw_cmd[1:]
+        self.process.start(cmd, keys)
+        #self.process.started.connect(lambda: self.statusBar.showMessage("Виконано", 1500))
+        #self.process.finished.connect(lambda: self.statusBar.showMessage("Закрито", 1500))
+        #self.process.error.connect(lambda: self.statusBar.showMessage("Не виконано", 1500))
+        self.launcher.hide()
 
 
 class Launcher(QWidget):

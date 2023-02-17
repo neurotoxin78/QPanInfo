@@ -129,7 +129,7 @@ class Weather(QWidget):
             w = x["wind"]
             wind_speed = w["speed"]
             wind_dir = degrees_to_cardinal(w["deg"])
-            self.we_condition_description.setText("| " + weather_description + " |")
+            self.we_condition_description.setText("| " + city_name + ": " + weather_description + " |")
             self.current_temperature.setText("<b>" + str(current_temperature) + ' <sup>°C</sup></b>  ')
             self.current_humidity.setText("<b>" + str(current_humidity) + ' <sup>%</sup><</b>  ')
             self.current_pressure.setText("<b>" + str(current_pressure) + ' <sup>hPa</sup><</b>  ')

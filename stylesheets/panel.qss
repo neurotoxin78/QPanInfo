@@ -109,30 +109,33 @@ QToolButton
 	color: #fff;
 	padding: 3px;
 	margin-left: 1px;
+	border-radius: 6px;
 }
 
 
 QToolButton:hover
 {
-	background-color: rgba(70,162,218,50%);
+	background-color: rgba(85, 85, 127, 50%);
 	border: 1px solid #46a2da;
 	color: #000;
+	border-radius: 6px;
 
 }
 
 
 QToolButton:pressed
 {
-	background-color: #727272;
+	background-color:  rgba(85, 85, 127, 50%);
 	border: 1px solid #46a2da;
-
+    border-radius: 6px;
 }
 
 
 QToolButton:checked
 {
-	background-color: #727272;
+	background-color:  rgba(85, 85, 127, 50%);
 	border: 1px solid #222;
+	border-radius: 6px;
 }
 
 
