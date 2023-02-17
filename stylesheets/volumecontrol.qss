@@ -1,10 +1,9 @@
 /*-----QFrame----*/
-QFrame
-{
-    background-color: rgba(125, 0, 0, 160);
-    border: 2px solid green;
-    border-radius: 4px;
+QFrame {
+    border: 1px rgba(85, 85, 127, 100);;
+    border-radius: 16px;
     padding: 2px;
+    background-color: rgba(85, 85, 127, 75);
 }
 
 
@@ -13,7 +12,7 @@ QLabel
 {
 	background-color: transparent;
 	border: none;
-	color: rgb(200, 200, 200);
+	color: rgba(255, 255, 255, 240);
 
 }
 

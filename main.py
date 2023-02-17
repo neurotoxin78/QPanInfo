@@ -33,11 +33,9 @@ class MainWindow(QMainWindow):
         self.process = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
         self.systimer = QTimer()
         self.ipchecktimer = QTimer()
-
-
         self.top_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
-        self.middle_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
-        self.bottom_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
+        self.middle_frame.setStyleSheet(loadStylesheet("stylesheets/networkload.qss"))
+        self.bottom_frame.setStyleSheet(loadStylesheet("stylesheets/volumecontrol.qss"))
         self.weather_frame.setStyleSheet(loadStylesheet("stylesheets/weather.qss"))
         self.launcher = Launcher()
         self.weather = Weather()
@@ -49,10 +47,17 @@ class MainWindow(QMainWindow):
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
         self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
-        #self.right_frame.setStyleSheet("border: 1px solid green; border-radius: 20px;")
+        # self.right_frame.setStyleSheet("border: 1px solid green; border-radius: 20px;")
         self.initUI()
         self.shadowize(blurradius=50)
         self.systemProcess()
+        self.CheckIP()
+        try:
+            #pass
+            self.weather.get_weather()
+        except:
+            pass
+
 
     def initUI(self):
         stylesheet = "stylesheets/panel.qss"
@@ -66,11 +71,7 @@ class MainWindow(QMainWindow):
         self.launcher.lineEdit.returnPressed.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.weather_frameLayout.addWidget(self.weather)
-        try:
-            #pass
-            self.weather.get_weather()
-        except:
-            pass
+
 
     def shadowize(self, blurradius=10):
         self.blurRadius = blurradius

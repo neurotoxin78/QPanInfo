@@ -56,7 +56,6 @@ def degrees_to_cardinal(d):
     '''
     note: this is highly approximate...
     '''
-    dirs = ["Північний", "NNE", "ПнЗахідний", "ENE", "Східний", "ESE", "ПдЗахідний", "SSE",
-            "Південний", "SSW", "ПдСхідний", "WSW", "Західний", "WNW", "ПнСхідний", "NNW"]
-    ix = int((d + 11.25)/22.5)
-    return dirs[ix % 16]
+    dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
+    ix = round(d / (360. / len(dirs)))
+    return dirs[ix % len(dirs)]
