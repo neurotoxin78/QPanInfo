@@ -1,7 +1,8 @@
 import requests
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QPixmap
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel, QGraphicsDropShadowEffect)
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel)
+
 from tools import get_config, loadStylesheet, degrees_to_cardinal, setShadow
 
 
@@ -75,10 +76,10 @@ class Weather(QWidget):
         setShadow(self.pres_img, 20)
         setShadow(self.wind_speed, 18)
         setShadow(self.wind_dir, 20)
-        self.colorize()
+        self.colorizer()
 
 
-    def colorize(self):
+    def colorizer(self):
         self.current_temperature.setStyleSheet("color: " + self.config['colors']['we_temperature_color'] + ";")
         self.current_humidity.setStyleSheet("color: " + self.config['colors']['we_humidity_color'] + ";")
         self.current_pressure.setStyleSheet("color: " + self.config['colors']['we_pressure_color'] + ";")

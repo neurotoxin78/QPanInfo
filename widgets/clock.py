@@ -2,7 +2,7 @@ from datetime import datetime
 
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QWidget, QGridLayout, QLabel, QGraphicsDropShadowEffect)
+from PyQt5.QtWidgets import (QWidget, QGridLayout, QLabel)
 
 from tools import get_config, loadStylesheet, setShadow
 

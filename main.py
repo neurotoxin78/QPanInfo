@@ -3,10 +3,10 @@ import sys
 
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QGraphicsDropShadowEffect)
+from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow)
 from rich.console import Console
 
-from tools import get_ip, extended_exception_hook, get_config, loadStylesheet, setShadow
+from tools import extended_exception_hook, get_config, loadStylesheet, setShadow
 from widgets.clock import Clock
 from widgets.launcher import LaunchButton
 from widgets.mpdcontrol import MPDControl
