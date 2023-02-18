@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel)
 
-from tools import get_config, get_size, loadStylesheet
+from tools import get_ip, get_config, get_size, loadStylesheet
 
 
 class NetworkLoad(QWidget):
@@ -16,6 +16,9 @@ class NetworkLoad(QWidget):
         self.nettimer = QTimer()
         self.nettimer.timeout.connect(self.netStat)
         self.nettimer.start(self.config['intervals']['net_interval_ms'])
+        self.ipchecktimer = QTimer()
+        self.ipchecktimer.timeout.connect(self.CheckIP)
+        self.ipchecktimer.start(self.config['intervals']['network_refresh_ms'])
         self.net_frame = QFrame()
         self.net_frame.setMinimumSize(QSize(0, 100))
         self.net_frame.setMaximumSize(QSize(16777215, 140))
@@ -76,6 +79,7 @@ class NetworkLoad(QWidget):
         self.dnLabel.setObjectName("dnLabel")
         self.net_frameLayout.addWidget(self.dnLabel, 1, 2, 1, 1)
         self.setLayout(self.net_frameLayout)
+        self.CheckIP()
 
     def netStat(self):
         io_2 = psutil.net_io_counters(pernic=True)
@@ -87,3 +91,6 @@ class NetworkLoad(QWidget):
         self.upLabel.setText(f"{get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
         self.dnLabel.setText(f"{get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
         self.io = io_2
+
+    def CheckIP(self):
+        self.ipLabel.setText('IP: ' + get_ip())

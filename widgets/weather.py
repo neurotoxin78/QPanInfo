@@ -32,6 +32,10 @@ class Weather(QWidget):
         self.temp_img.setPixmap(QPixmap('images/thermometer-white-32.png'))
         self.humi_img.setPixmap(QPixmap('images/humidity-32.png'))
         self.pres_img.setPixmap(QPixmap('images/pressure-32.png'))
+        self.temp_img.setMaximumSize(QSize(32, 32))
+        self.humi_img.setMaximumSize(QSize(32, 32))
+        self.pres_img.setMaximumSize(QSize(32, 32))
+        self.we_condition_description.setMinimumSize(QSize(200, 32))
         self.setupUI()
 
     def setupUI(self):
@@ -40,7 +44,7 @@ class Weather(QWidget):
         self.layout.addWidget(self.we_condition, 0, 5, 2, 3, Qt.AlignCenter)
         self.layout.addWidget(self.wind_speed, 1, 0, 1, 3, Qt.AlignCenter)
         self.layout.addWidget(self.wind_dir, 1, 2, 1, 3, Qt.AlignCenter)
-        self.layout.addWidget(self.we_condition_description, 0, 2, 1, 3, Qt.AlignCenter)
+        self.layout.addWidget(self.we_condition_description, 0, 0, 1, 4, Qt.AlignCenter)
         self.layout.addWidget(self.temp_img, 3, 0)
         self.layout.addWidget(self.current_temperature, 3, 1)
         self.layout.addWidget(self.humi_img, 3, 2)

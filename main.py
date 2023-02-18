@@ -25,13 +25,10 @@ class MainWindow(QMainWindow):
         self.config = get_config()
         uic.loadUi('ui/panel.ui', self)
         self.setWindowTitle("QPanInfo")
-        self.setWindowFlags(Qt.FramelessWindowHint
-                            | Qt.Tool | Qt.WindowStaysOnBottomHint
-                            )
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnBottomHint)
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.systimer = QTimer()
-        self.ipchecktimer = QTimer()
         self.top_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
         self.middle_frame.setStyleSheet(loadStylesheet("stylesheets/networkload.qss"))
         self.bottom_frame.setStyleSheet(loadStylesheet("stylesheets/volumecontrol.qss"))
@@ -51,9 +48,7 @@ class MainWindow(QMainWindow):
         self.l_bottom_frameLayout.addWidget(self.launchButton, 1, 0, 1, 1)
         # self.right_frame.setStyleSheet("border: 1px solid green; border-radius: 20px;")
         self.initUI()
-        self.shadowize(blurradius=50)
         self.systemProcess()
-        self.CheckIP()
         try:
             #pass
             self.weather.get_weather()
@@ -66,10 +61,9 @@ class MainWindow(QMainWindow):
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
-        self.ipchecktimer.timeout.connect(self.CheckIP)
-        self.ipchecktimer.start(self.config['intervals']['network_refresh_ms'])
         self.networkLoad.ipLabel.setText("Мережа не підключена")
         self.weather_frameLayout.addWidget(self.weather)
+        self.shadowize(blurradius=50)
 
 
     def shadowize(self, blurradius=10):
@@ -90,10 +84,6 @@ class MainWindow(QMainWindow):
     def systemProcess(self):
         gc.collect()
         self.statusBar.showMessage("Вивільнення пам'яті...", self.config['intervals']['statusbar_msg_time_ms'])
-
-
-    def CheckIP(self):
-        self.networkLoad.ipLabel.setText('IP: ' + get_ip())
 
 
 def main():
