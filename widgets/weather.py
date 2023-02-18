@@ -2,7 +2,7 @@ import requests
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel, QGraphicsDropShadowEffect)
-from tools import get_config, loadStylesheet, degrees_to_cardinal
+from tools import get_config, loadStylesheet, degrees_to_cardinal, setShadow
 
 
 class Weather(QWidget):
@@ -32,9 +32,9 @@ class Weather(QWidget):
         self.temp_img.setPixmap(QPixmap('images/thermometer-white-32.png'))
         self.humi_img.setPixmap(QPixmap('images/humidity-32.png'))
         self.pres_img.setPixmap(QPixmap('images/pressure-32.png'))
-        self.temp_img.setMaximumSize(QSize(32, 32))
-        self.humi_img.setMaximumSize(QSize(32, 32))
-        self.pres_img.setMaximumSize(QSize(32, 32))
+        self.temp_img.setMaximumSize(QSize(38, 38))
+        self.humi_img.setMaximumSize(QSize(38, 38))
+        self.pres_img.setMaximumSize(QSize(38, 38))
         self.we_condition_description.setMinimumSize(QSize(200, 32))
         self.setupUI()
 
@@ -65,40 +65,19 @@ class Weather(QWidget):
         self.current_temperature.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         self.current_humidity.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         self.current_pressure.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
-        self.shadowize(blurradius=20)
+        setShadow(self.we_condition_description, 20)
+        setShadow(self.current_temperature, 20)
+        setShadow(self.current_humidity, 20)
+        setShadow(self.current_pressure, 20)
+        setShadow(self.we_condition, 20)
+        setShadow(self.temp_img, 20)
+        setShadow(self.humi_img, 20)
+        setShadow(self.pres_img, 20)
+        setShadow(self.wind_speed, 20)
+        setShadow(self.wind_dir, 20)
         self.colorize()
 
-    def shadowize(self, blurradius=10):
-        shadow1 = QGraphicsDropShadowEffect()
-        shadow1.setBlurRadius(blurradius)
-        shadow2 = QGraphicsDropShadowEffect()
-        shadow2.setBlurRadius(blurradius)
-        shadow3 = QGraphicsDropShadowEffect()
-        shadow3.setBlurRadius(blurradius)
-        shadow4 = QGraphicsDropShadowEffect()
-        shadow4.setBlurRadius(blurradius)
-        shadow5 = QGraphicsDropShadowEffect()
-        shadow5.setBlurRadius(blurradius)
-        shadow6 = QGraphicsDropShadowEffect()
-        shadow6.setBlurRadius(blurradius)
-        shadow7 = QGraphicsDropShadowEffect()
-        shadow7.setBlurRadius(blurradius)
-        shadow8 = QGraphicsDropShadowEffect()
-        shadow8.setBlurRadius(blurradius + 10)
-        shadow9 = QGraphicsDropShadowEffect()
-        shadow9.setBlurRadius(blurradius)
-        shadow10 = QGraphicsDropShadowEffect()
-        shadow10.setBlurRadius(blurradius)
-        self.we_condition_description.setGraphicsEffect(shadow8)
-        self.current_temperature.setGraphicsEffect(shadow1)
-        self.current_humidity.setGraphicsEffect(shadow2)
-        self.current_pressure.setGraphicsEffect(shadow3)
-        self.we_condition.setGraphicsEffect(shadow4)
-        self.temp_img.setGraphicsEffect(shadow5)
-        self.humi_img.setGraphicsEffect(shadow6)
-        self.pres_img.setGraphicsEffect(shadow7)
-        self.wind_speed.setGraphicsEffect(shadow9)
-        self.wind_dir.setGraphicsEffect(shadow10)
+
     def colorize(self):
         self.current_temperature.setStyleSheet("color: " + self.config['colors']['we_temperature_color'] + ";")
         self.current_humidity.setStyleSheet("color: " + self.config['colors']['we_humidity_color'] + ";")

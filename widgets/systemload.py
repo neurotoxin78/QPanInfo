@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt, QSize, QCoreApplication, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar, QGraphicsDropShadowEffect)
-from tools import loadStylesheet, get_config, get_cputemp
+from tools import loadStylesheet, get_config, get_cputemp, setShadow
 import psutil
 
 class SystemLoad(QWidget):
@@ -17,9 +17,9 @@ class SystemLoad(QWidget):
         self.temptimer.timeout.connect(self.tempStat)
         self.temptimer.start(self.config['intervals']['cpu_temp_refresh_ms'])
         font = QFont()
-        font.setFamily("Roboto Mono for Powerline")
-        font.setPointSize(16)
-        font.setBold(False)
+        font.setFamily("Noto Sans")
+        font.setPointSize(18)
+        font.setBold(True)
         font.setUnderline(False)
         font.setWeight(50)
         self.sensor_frame = QFrame()
@@ -70,7 +70,12 @@ class SystemLoad(QWidget):
         self.sensor_frameLayout.addWidget(self.tempBar, 2, 1, 1, 1)
         self.setLayout(self.sensor_frameLayout)
         self.retranslateUi(SystemLoad)
-        self.shadowize()
+        setShadow(self.cpuBar, 5)
+        setShadow(self.ramBar, 5)
+        setShadow(self.tempBar, 5)
+        setShadow(self.cpulabel, 1)
+        setShadow(self.ramLabel, 1)
+        setShadow(self.cpu_tempLabel, 1)
 
     def retranslateUi(self, SystemLoad):
         _translate = QCoreApplication.translate

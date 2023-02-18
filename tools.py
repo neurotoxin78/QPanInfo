@@ -2,10 +2,16 @@ import socket
 import sys
 import toml
 from os import listdir
-
+from PyQt5.QtWidgets import (QWidget, QGraphicsDropShadowEffect)
 from rich.console import Console
 
 con = Console()
+
+
+def setShadow(obj, blurradius: int):
+    shadow = QGraphicsDropShadowEffect()
+    shadow.setBlurRadius(blurradius)
+    obj.setGraphicsEffect(shadow)
 
 def get_apps_list(path):
     return listdir(path)

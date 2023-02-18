@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, QSize, QProcess, pyqtSlot
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import (QDesktopWidget, QWidget, QCompleter, QFrame, QGridLayout, QPushButton)
 
-from tools import get_config, get_apps_list
+from tools import get_config, get_apps_list, setShadow
 
 
 class LaunchButton(QWidget):
@@ -39,6 +39,8 @@ class LaunchButton(QWidget):
         self.launcher.launchBtn.clicked.connect(lambda: self.AppLaunch(self.launcher.lineEdit.text()))
         self.launch_frame_frameLayout.addWidget(self.appBtn, 0, 0)
         self.setLayout(self.launch_frame_frameLayout)
+        setShadow(self.appBtn, 25)
+
     def app_click(self):
         monitor = QDesktopWidget().screenGeometry(self.config['display']['output_display'])
         self.launcher.move(monitor.left(), monitor.top())

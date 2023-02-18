@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QGraphicsDropShadowEffect)
 from rich.console import Console
 
-from tools import get_ip, extended_exception_hook, get_config, loadStylesheet
+from tools import get_ip, extended_exception_hook, get_config, loadStylesheet, setShadow
 from widgets.clock import Clock
 from widgets.launcher import LaunchButton
 from widgets.mpdcontrol import MPDControl
@@ -63,23 +63,12 @@ class MainWindow(QMainWindow):
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.networkLoad.ipLabel.setText("Мережа не підключена")
         self.weather_frameLayout.addWidget(self.weather)
-        self.shadowize(blurradius=50)
+        # Decorations
+        setShadow(self.top_frame, 20)
+        setShadow(self.middle_frame, 20)
+        setShadow(self.weather_frame, 20)
+        setShadow(self.bottom_frame, 20)
 
-
-    def shadowize(self, blurradius=10):
-        self.blurRadius = blurradius
-        shadow_top = QGraphicsDropShadowEffect()
-        shadow_top.setBlurRadius(self.blurRadius)
-        shadow_middle = QGraphicsDropShadowEffect()
-        shadow_middle.setBlurRadius(self.blurRadius)
-        shadow_bottom = QGraphicsDropShadowEffect()
-        shadow_bottom.setBlurRadius(self.blurRadius)
-        shadow_weather = QGraphicsDropShadowEffect()
-        shadow_weather.setBlurRadius(self.blurRadius)
-        self.top_frame.setGraphicsEffect(shadow_top)
-        self.middle_frame.setGraphicsEffect(shadow_middle)
-        self.bottom_frame.setGraphicsEffect(shadow_bottom)
-        self.weather_frame.setGraphicsEffect(shadow_weather)
 
     def systemProcess(self):
         gc.collect()

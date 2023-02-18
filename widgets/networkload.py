@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel)
 
-from tools import get_ip, get_config, get_size, loadStylesheet
+from tools import get_ip, get_config, get_size, loadStylesheet, setShadow
 
 
 class NetworkLoad(QWidget):
@@ -42,7 +42,7 @@ class NetworkLoad(QWidget):
         self.upLabel = QLabel(self.net_frame)
         self.upLabel.setMinimumSize(QSize(0, 30))
         self.upLabel.setFont(font)
-        self.upLabel.setStyleSheet("color: rgba(85, 170, 255, 225);")
+        self.upLabel.setStyleSheet("color: rgba(101, 190, 0, 250);")
         self.upLabel.setAlignment(Qt.AlignCenter)
         self.upLabel.setObjectName("upLabel")
         self.net_frameLayout.addWidget(self.upLabel, 2, 2, 1, 1)
@@ -56,7 +56,7 @@ class NetworkLoad(QWidget):
         self.label = QLabel(self.net_frame)
         self.label.setMinimumSize(QSize(0, 30))
         self.label.setFont(font)
-        self.label.setStyleSheet("color: rgba(85, 170, 255, 225);")
+        self.label.setStyleSheet("color: rgba(101, 190, 0, 250);")
         self.label.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self.label.setObjectName("label")
         self.label.setText("Відвантаження")
@@ -65,7 +65,7 @@ class NetworkLoad(QWidget):
         self.label_2 = QLabel(self.net_frame)
         self.label_2.setMinimumSize(QSize(0, 30))
         self.label_2.setFont(font)
-        self.label_2.setStyleSheet("color: rgba(85, 170, 127, 225);")
+        self.label_2.setStyleSheet("color: rgba(83, 180, 255, 250);")
         self.label_2.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self.label_2.setObjectName("label_2")
         self.label_2.setText("Завантаження")
@@ -74,11 +74,17 @@ class NetworkLoad(QWidget):
         self.dnLabel = QLabel(self.net_frame)
         self.dnLabel.setMinimumSize(QSize(0, 30))
         self.dnLabel.setFont(font)
-        self.dnLabel.setStyleSheet("color: rgba(85, 170, 127, 225);")
+        self.dnLabel.setStyleSheet("color: rgba(83, 180, 255, 250);")
         self.dnLabel.setAlignment(Qt.AlignCenter)
         self.dnLabel.setObjectName("dnLabel")
         self.net_frameLayout.addWidget(self.dnLabel, 1, 2, 1, 1)
         self.setLayout(self.net_frameLayout)
+        setShadow(self.dnLabel, 5)
+        setShadow(self.upLabel, 5)
+        setShadow(self.label, 5)
+        setShadow(self.label_2, 5)
+        setShadow(self.ipLabel, 5)
+        setShadow(self.interfaceLabel, 5)
         self.CheckIP()
 
     def netStat(self):

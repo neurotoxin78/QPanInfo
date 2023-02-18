@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QWidget, QGridLayout, QLabel, QGraphicsDropShadowEffect)
 
-from tools import get_config, loadStylesheet
+from tools import get_config, loadStylesheet, setShadow
 
 
 class Clock(QWidget):
@@ -33,10 +33,7 @@ class Clock(QWidget):
         self.time_Label.setObjectName("time_Label")
         self.layout.addWidget(self.time_Label, 0, 5, 1, 1, Qt.AlignCenter)
         self.setLayout(self.layout)
-        shadow = QGraphicsDropShadowEffect()
-        # setting blur radius
-        shadow.setBlurRadius(15)
-        self.time_Label.setGraphicsEffect(shadow)
+        setShadow(self.time_Label, 25)
 
     def Clock(self):
         now = datetime.now()
