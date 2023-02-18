@@ -10,6 +10,7 @@ class Weather(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         stylesheet = "stylesheets/weather.qss"
+        self.MainPanel = args[0]
         self.setStyleSheet(loadStylesheet(stylesheet))
         self.config = get_config()
         self.weathertimer = QTimer()
@@ -37,16 +38,16 @@ class Weather(QWidget):
         self.humi_img.setMaximumSize(QSize(38, 38))
         self.pres_img.setMaximumSize(QSize(38, 38))
         self.we_condition_description.setMinimumSize(QSize(200, 32))
-        self.wind_speed.setMinimumSize(QSize(200, 32))
+        self.wind_speed.setMinimumSize(QSize(165, 32))
         self.setupUI()
 
     def setupUI(self):
         self.we_condition.setIconSize(QSize(96, 96))
         self.we_condition.clicked.connect(self.refresh)
         self.layout.addWidget(self.we_condition, 0, 5, 2, 3, Qt.AlignCenter)
-        self.layout.addWidget(self.wind_speed, 1, 0, 1, 2, Qt.AlignLeft)
-        self.layout.addWidget(self.wind_dir, 1, 2, 1, 3, Qt.AlignLeft)
-        self.layout.addWidget(self.we_condition_description, 0, 1, 1, 4, Qt.AlignCenter)
+        self.layout.addWidget(self.wind_speed, 1, 0, 1, 3, Qt.AlignLeft)
+        self.layout.addWidget(self.wind_dir, 1, 3, 1, 3, Qt.AlignLeft)
+        self.layout.addWidget(self.we_condition_description, 0, 0, 1, 4, Qt.AlignCenter)
         self.layout.addWidget(self.temp_img, 3, 0)
         self.layout.addWidget(self.current_temperature, 3, 1)
         self.layout.addWidget(self.humi_img, 3, 2)
@@ -60,7 +61,8 @@ class Weather(QWidget):
         self.current_humidity.setFont(QFont('DejaVu Sans Mono for Powerline', 20))
         self.current_pressure.setFont(QFont('DejaVu Sans Mono for Powerline', 20))
         self.wind_speed.setFont(QFont('DejaVu Sans Mono for Powerline', 20))
-        self.wind_speed.setAlignment(Qt.AlignRight)
+        self.wind_speed.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.wind_speed.setMinimumSize(QSize(200, 40))
         self.wind_dir.setFont(QFont('DejaVu Sans Mono for Powerline', 20))
         self.wind_dir.setAlignment(Qt.AlignLeft)
         self.current_temperature.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
@@ -90,8 +92,9 @@ class Weather(QWidget):
     def refresh(self):
         try:
             self.get_weather()
+            self.MainPanel.statusBar.showMessage("Прогноз погоди оновлено!", 3000)
         except:
-            pass
+            self.MainPanel.statusBar.showMessage("Неможливо оновити прогноз погоди", 3000)
 
     def get_weather(self):
         api_key = self.config['weather']['api_key']
@@ -118,7 +121,7 @@ class Weather(QWidget):
             self.current_humidity.setText("<b>" + str(current_humidity) + ' <sup>%</sup><</b>  ')
             self.current_pressure.setText("<b>" + str(current_pressure) + ' <sup>hPa</sup><</b>  ')
             self.set_we_description(weather_code)
-            self.wind_speed.setText(u'\udb84\udfff <b>' + str(wind_speed) + '<sup>м/c</sup></b>  ')
+            self.wind_speed.setText(u'\udb84\udfff Вітер: <b>' + str(wind_speed) + '<sup>м/c</sup></b>  ')
             self.wind_dir.setText(u"\udb81\udf81  <b>"+ str(wind_dir) + '</b>  ')
         else:
             print(" City Not Found ")

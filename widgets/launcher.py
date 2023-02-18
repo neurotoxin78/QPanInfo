@@ -10,6 +10,7 @@ class LaunchButton(QWidget):
     def __init__(self, *args, **kwargs):
         super(LaunchButton, self).__init__(*args, **kwargs)
         # Load the UI Page
+        self.MainPanel = args[0]
         self.config = get_config()
         self.launcher = Launcher()
         self.process = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
@@ -43,7 +44,7 @@ class LaunchButton(QWidget):
 
     def app_click(self):
         monitor = QDesktopWidget().screenGeometry(self.config['display']['output_display'])
-        self.launcher.move(monitor.left(), monitor.top())
+        #self.launcher.move(monitor.left(), monitor.top())
         self.launcher.show()
 
     def AppLaunch(self, command : str):
@@ -51,9 +52,9 @@ class LaunchButton(QWidget):
         cmd = raw_cmd[0]
         keys = raw_cmd[1:]
         self.process.start(cmd, keys)
-        #self.process.started.connect(lambda: self.statusBar.showMessage("Виконано", 1500))
-        #self.process.finished.connect(lambda: self.statusBar.showMessage("Закрито", 1500))
-        #self.process.error.connect(lambda: self.statusBar.showMessage("Не виконано", 1500))
+        #self.process.started.connect(lambda: self.MainPanel.showMessage("Виконано", 1500))
+        #self.process.finished.connect(lambda: self.MainPanel.showMessage("Закрито", 1500))
+        #self.process.error.connect(lambda: self.MainPanel.showMessage("Не виконано", 1500))
         self.launcher.hide()
 
 

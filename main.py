@@ -2,7 +2,7 @@ import gc
 import sys
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, QSize
 from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow)
 from rich.console import Console
 
@@ -29,24 +29,27 @@ class MainWindow(QMainWindow):
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.systimer = QTimer()
+        self.systimer.timeout.connect(self.systemProcess)
+        self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.top_frame.setStyleSheet(loadStylesheet("stylesheets/systemload.qss"))
         self.middle_frame.setStyleSheet(loadStylesheet("stylesheets/networkload.qss"))
         self.bottom_frame.setStyleSheet(loadStylesheet("stylesheets/volumecontrol.qss"))
-        self.weather_frame.setStyleSheet(loadStylesheet("stylesheets/weather.qss"))
-        self.weather = Weather()
+        self.r_top_frame.setStyleSheet(loadStylesheet("stylesheets/weather.qss"))
+        self.weather = Weather(self)
         self.systemLoad = SystemLoad()
         self.networkLoad = NetworkLoad()
         self.volumeControl = VolumeControl()
         self.clock = Clock()
         self.mediaControl = MPDControl()
-        self.launchButton = LaunchButton()
+        self.launchButton = LaunchButton(self)
         self.l_middle_frameLayout.addWidget(self.clock, 0, 0)
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
         self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
         self.l_bottom_frameLayout.addWidget(self.mediaControl, 0, 0, 1, 0)
         self.l_bottom_frameLayout.addWidget(self.launchButton, 1, 0, 1, 1)
-        # self.right_frame.setStyleSheet("border: 1px solid green; border-radius: 20px;")
+        self.r_top_frameLayout.addWidget(self.weather, 0, 0, Qt.AlignTop)
+        self.r_top_frame.setMaximumSize(QSize(600, 160))
         self.initUI()
         self.systemProcess()
         try:
@@ -59,14 +62,11 @@ class MainWindow(QMainWindow):
     def initUI(self):
         stylesheet = "stylesheets/panel.qss"
         self.setStyleSheet(loadStylesheet(stylesheet))
-        self.systimer.timeout.connect(self.systemProcess)
-        self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
         self.networkLoad.ipLabel.setText("Мережа не підключена")
-        self.weather_frameLayout.addWidget(self.weather)
         # Decorations
         setShadow(self.top_frame, 20)
         setShadow(self.middle_frame, 20)
-        setShadow(self.weather_frame, 20)
+        setShadow(self.r_top_frame, 20)
         setShadow(self.bottom_frame, 20)
 
 
