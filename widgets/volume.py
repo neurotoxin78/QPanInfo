@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QHBoxLayout, QLabel, QDial)
 from pulsectl import Pulse
-from tools import loadStylesheet
+from tools import loadStylesheet, setShadow
 
 
 class VolumeControl(QWidget):
@@ -20,7 +20,7 @@ class VolumeControl(QWidget):
         self.volume_label = QLabel(self.volume_frame)
         self.volume_label.setMaximumSize(QSize(120, 32))
         font = QFont()
-        font.setFamily("DSEG14 Classic")
+        font.setFamily("DejaVu Sans Mono for Powerline")
         font.setPointSize(20)
         font.setBold(True)
         font.setItalic(False)
@@ -33,6 +33,8 @@ class VolumeControl(QWidget):
         self.volume_dial.setMaximumSize(QSize(170, 170))
         self.volume_dial.setObjectName("volume_dial")
         self.volume_frameLayout.addWidget(self.volume_dial)
+        setShadow(self.volume_label, 25)
+        setShadow(self.volume_dial, 25)
         self.setLayout(self.volume_frameLayout)
         self.volume_dial_set()
         self.volume_dial.valueChanged.connect(self.volume_change)
@@ -44,7 +46,7 @@ class VolumeControl(QWidget):
                 volume = sink_input.volume
                 volume_value = int(volume.value_flat * 100)  # average level across channels (float)
             self.volume_dial.setValue(volume_value)
-            self.volume_label.setText(str(int(volume_value)) + '%')
+            self.volume_label.setText(u'\uf027' + str(int(volume_value)) + '%')
         except:
             pass
 
