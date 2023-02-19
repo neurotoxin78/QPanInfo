@@ -64,12 +64,13 @@ class NetworkLoad(QWidget):
         self.network_plot.plotItem.showGrid(x=True, y=True, alpha=0.3)
         self.network_plot.getPlotItem().addLegend()
         self.network_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
+        self.network_plot.getPlotItem().enableAutoRange(axis='x', enable=True)
         self.network_plot.setLogMode(x=True, y=False)
         self.upload_curve = self.network_plot.plot(
-            pen=pg.mkPen('g', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
+            pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
                          style=Qt.SolidLine))
         self.download_curve = self.network_plot.plot(
-            pen=pg.mkPen('b', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
+            pen=pg.mkPen('#009ceb', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
                          style=Qt.SolidLine))
         # l.addItem(self.curve, 'upload')
         self.network_plot.getPlotItem().hideAxis('bottom')
@@ -82,14 +83,14 @@ class NetworkLoad(QWidget):
         self.upLabel.setStyleSheet("color: rgba(101, 190, 0, 250);")
         self.upLabel.setAlignment(Qt.AlignLeft)
         self.upLabel.setObjectName("upLabel")
-        self.net_frameLayout.addWidget(self.upLabel, 2, 1, 1, 1, Qt.AlignCenter)
+        self.net_frameLayout.addWidget(self.upLabel, 2, 0, 1, 1, Qt.AlignCenter)
         self.dnLabel = QLabel(self.net_frame)
         self.dnLabel.setMinimumSize(QSize(120, 25))
         self.dnLabel.setFont(font)
         self.dnLabel.setStyleSheet("color: rgba(83, 180, 255, 250);")
         self.dnLabel.setAlignment(Qt.AlignLeft)
         self.dnLabel.setObjectName("dnLabel")
-        self.net_frameLayout.addWidget(self.dnLabel, 1, 1, 1, 1, Qt.AlignCenter)
+        self.net_frameLayout.addWidget(self.dnLabel, 1, 0, 1, 1, Qt.AlignCenter)
         self.ipLabel = QLabel(self.net_frame)
         self.ipLabel.setMaximumSize(QSize(16777215, 30))
         self.ipLabel.setFont(font)
