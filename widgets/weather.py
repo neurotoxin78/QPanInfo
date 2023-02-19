@@ -2,9 +2,11 @@ import requests
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel)
-
+from rich.console import Console
 from tools import get_config, loadStylesheet, degrees_to_cardinal, setShadow
 
+
+con = Console()
 
 class Weather(QWidget):
     def __init__(self, *args, **kwargs):
@@ -101,7 +103,7 @@ class Weather(QWidget):
         base_url = self.config['weather']['url']
         city_name = self.config['weather']['city']
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&lang=UA"
-        print(complete_url)
+        #print(complete_url)
         response = requests.get(complete_url)
         x = response.json()
         if x["cod"] != "404":
@@ -112,7 +114,8 @@ class Weather(QWidget):
             z = x["weather"]
             weather_description = z[0]["description"]
             weather_code = z[0]["id"]
-            print(weather_description)
+            #print(weather_description)
+            con.log("Weather data refreshed")
             w = x["wind"]
             wind_speed = w["speed"]
             wind_dir = degrees_to_cardinal(w["deg"])
@@ -121,7 +124,7 @@ class Weather(QWidget):
             self.current_humidity.setText("<b>" + str(current_humidity) + ' <sup>%</sup><</b>  ')
             self.current_pressure.setText("<b>" + str(current_pressure) + ' <sup>hPa</sup><</b>  ')
             self.set_we_description(weather_code)
-            self.wind_speed.setText(u'\udb84\udfff Вітер: <b>' + str(wind_speed) + '<sup>м/c</sup></b>  ')
+            self.wind_speed.setText(u'\udb84\udfff вітер: <b>' + str(wind_speed) + '<sup>м/c</sup></b>  ')
             self.wind_dir.setText(u"\udb81\udf81  <b>"+ str(wind_dir) + '</b>  ')
         else:
             print(" City Not Found ")

@@ -8,7 +8,7 @@ time_format = "%H:%M<sup><u>%S</u></sup>"
 sys_proc_refresh_ms = 60000
 sensor_refresh_ms = 500
 clock_refresh_ms = 500
-network_refresh_ms = 5000
+network_refresh_ms = 1000
 cpu_temp_refresh_ms = 2000
 net_interval_ms = 1000
 weather_fefresh_min = 10
@@ -24,6 +24,10 @@ interface = "enp39s0"
 api_key = "e7a63eca33717887514a746f7ab259f6"
 url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
 city = "Kyiv"
+
+[openai]
+api_key = "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"
+model_engine = "text-davinci-003"
 
 [colors]
 we_temperature_color = "rgba(220, 250, 255, 250)"

@@ -2,7 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt, QSize, QProcess, pyqtSlot
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import (QDesktopWidget, QWidget, QCompleter, QFrame, QGridLayout, QPushButton)
-
+from widgets.virtual_keyboard import AlphaNeumericVirtualKeyboard
 from tools import get_config, get_apps_list, setShadow
 
 
@@ -21,7 +21,7 @@ class LaunchButton(QWidget):
         self.launch_frame.setFrameShadow(QFrame.Raised)
         self.launch_frame.setObjectName("launch_frame")
         self.launch_frame_frameLayout = QGridLayout(self.launch_frame)
-        self.launch_frame_frameLayout.setObjectName("net_frameLayout")
+        self.launch_frame_frameLayout.setObjectName("launch_frameLayout")
         font = QFont()
         font.setFamily("Roboto Mono for Powerline")
         font.setPointSize(20)
@@ -42,10 +42,17 @@ class LaunchButton(QWidget):
         self.setLayout(self.launch_frame_frameLayout)
         setShadow(self.appBtn, 25)
 
+
+
     def app_click(self):
         monitor = QDesktopWidget().screenGeometry(self.config['display']['output_display'])
         #self.launcher.move(monitor.left(), monitor.top())
         self.launcher.show()
+        #self.virtual_keyboard = AlphaNeumericVirtualKeyboard(self.MainPanel, x_pos=0, y_pos=0)
+        #self.virtual_keyboard.move(monitor.left(), monitor.top())
+        #self.virtual_keyboard.display(self.launcher.lineEdit)
+        #self.virtual_keyboard.raise_()
+
 
     def AppLaunch(self, command : str):
         raw_cmd = command.split(sep=" ")

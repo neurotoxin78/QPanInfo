@@ -15,6 +15,7 @@ from widgets.systemload import SystemLoad
 from widgets.volume import VolumeControl
 from widgets.weather import Weather
 
+
 con = Console()
 
 
@@ -52,6 +53,7 @@ class MainWindow(QMainWindow):
         self.r_top_frame.setMaximumSize(QSize(600, 160))
         self.initUI()
         self.systemProcess()
+        self.middle_frame.setMaximumSize(QSize(370, 175))
         try:
             #pass
             self.weather.get_weather()
