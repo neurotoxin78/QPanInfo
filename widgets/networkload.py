@@ -61,7 +61,7 @@ class NetworkLoad(QWidget):
         # l.setParentItem(self.network_plot.graphicsItem())   # Note we do NOT call plt.addItem in this case
         self.network_plot.setBackground(background)
         # self.network_plot.addLegend()
-        self.network_plot.plotItem.showGrid(x=True, y=True, alpha=0.3)
+        self.network_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.network_plot.getPlotItem().addLegend()
         self.network_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
         self.network_plot.getPlotItem().enableAutoRange(axis='x', enable=True)
@@ -117,12 +117,12 @@ class NetworkLoad(QWidget):
         self.dnLabel.setText(f"\uf063 {get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
         if len(self.upload_graph_data) > self.graph_data_limit:
             self.upload_graph_data.popleft() #remove oldest
-        self.upload_graph_data.append(upload_speed)
+        self.upload_graph_data.append(upload_speed / self.config['intervals']['net_interval_ms'])
         self.upload_curve.setData(self.upload_graph_data)
 
         if len(self.download_graph_data) > self.graph_data_limit:
             self.download_graph_data.popleft() #remove oldest
-        self.download_graph_data.append(download_speed)
+        self.download_graph_data.append(download_speed / self.config['intervals']['net_interval_ms'])
         self.download_curve.setData(self.download_graph_data)
 
         self.io = io_2
