@@ -50,32 +50,54 @@ class NetworkLoad(QWidget):
         self.interfaceLabel.setObjectName("interfaceLabel")
         self.interfaceLabel.setMinimumSize(QSize(120, 25))
         self.net_frameLayout.addWidget(self.interfaceLabel, 0, 0, 1, 3)
-        # PLOT
-        self.network_plot = PlotWidget()
-        self.network_plot.setGeometry(QRect(0, 0, 10, 10))
-        self.network_plot.setStyleSheet("background-color: transparent; color: #FB9902;")
-        self.network_plot.setObjectName("upload_plot")
+        # UPLOAD PLOT
+        self.upload_plot = PlotWidget()
+        self.upload_plot.setGeometry(QRect(0, 0, 10, 10))
+        self.upload_plot.setStyleSheet("background-color: transparent; color: #FB9902;")
+        self.upload_plot.setObjectName("upload_plot")
         background = QBrush()
         background.setColor(QColor(0x31363b))
         #l = pg.LegendItem((10, 10), offset=(60, 92))  # args are (size, offset)
         # l.setParentItem(self.network_plot.graphicsItem())   # Note we do NOT call plt.addItem in this case
-        self.network_plot.setBackground(background)
+        self.upload_plot.setBackground(background)
         # self.network_plot.addLegend()
-        self.network_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
-        self.network_plot.getPlotItem().addLegend()
-        self.network_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        self.network_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
-        self.network_plot.setLogMode(x=True, y=False)
-        self.upload_curve = self.network_plot.plot(
+        self.upload_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
+        self.upload_plot.getPlotItem().addLegend()
+        self.upload_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
+        self.upload_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
+        self.upload_plot.setLogMode(x=True, y=False)
+        self.upload_curve = self.upload_plot.plot(
             pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
                          style=Qt.SolidLine))
-        self.download_curve = self.network_plot.plot(
-            pen=pg.mkPen('#009ceb', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
+        # l.addItem(self.curve, 'upload')
+        self.upload_plot.getPlotItem().hideAxis('bottom')
+        self.upload_plot.getPlotItem().hideAxis('left')
+        # DOWNLOAD PLOT
+        self.download_plot = PlotWidget()
+        self.download_plot.setGeometry(QRect(0, 0, 10, 10))
+        self.download_plot.setStyleSheet("background-color: transparent; color: #FB9902;")
+        self.download_plot.setObjectName("upload_plot")
+        background = QBrush()
+        background.setColor(QColor(0x31363b))
+        # l = pg.LegendItem((10, 10), offset=(60, 92))  # args are (size, offset)
+        # l.setParentItem(self.network_plot.graphicsItem())   # Note we do NOT call plt.addItem in this case
+        self.download_plot.setBackground(background)
+        # self.network_plot.addLegend()
+        self.download_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
+        self.download_plot.getPlotItem().addLegend()
+        self.download_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
+        self.download_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
+        self.download_plot.setLogMode(x=True, y=False)
+        self.download_curve = self.download_plot.plot(
+            pen=pg.mkPen('#009ceb', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o',
+                         symbolSize=14,
                          style=Qt.SolidLine))
         # l.addItem(self.curve, 'upload')
-        self.network_plot.getPlotItem().hideAxis('bottom')
-        self.network_plot.getPlotItem().hideAxis('left')
-        self.net_frameLayout.addWidget(self.network_plot, 1, 0, 2, 2)
+        self.download_plot.getPlotItem().hideAxis('bottom')
+        self.download_plot.getPlotItem().hideAxis('left')
+        # Add Plots to layout
+        self.net_frameLayout.addWidget(self.upload_plot, 2, 0, 1, 1)
+        self.net_frameLayout.addWidget(self.download_plot, 1, 0, 1, 1)
         # LABELS
         self.upLabel = QLabel(self.net_frame)
         self.upLabel.setMinimumSize(QSize(120, 25))
@@ -112,16 +134,22 @@ class NetworkLoad(QWidget):
         iface_io = self.io[iface]
         upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
             io_2[iface].bytes_recv - iface_io.bytes_recv
+
+        up_speed = upload_speed / self.config['intervals']['net_interval_ms']
+        dn_speed = download_speed / self.config['intervals']['net_interval_ms']
         self.interfaceLabel.setText("інтерфейс: " + iface)
-        self.upLabel.setText(f"\uf062 {get_size(upload_speed / self.config['intervals']['net_interval_ms'])}/s")
-        self.dnLabel.setText(f"\uf063 {get_size(download_speed / self.config['intervals']['net_interval_ms'])}/s")
+        self.upLabel.setText(f"\uf062 {get_size(up_speed)}/s")
+        self.dnLabel.setText(f"\uf063 {get_size(dn_speed)}/s")
+
         if len(self.upload_graph_data) > self.graph_data_limit:
             self.upload_graph_data.popleft() #remove oldest
+
         self.upload_graph_data.append(upload_speed / self.config['intervals']['net_interval_ms'])
         self.upload_curve.setData(self.upload_graph_data)
 
         if len(self.download_graph_data) > self.graph_data_limit:
             self.download_graph_data.popleft() #remove oldest
+
         self.download_graph_data.append(download_speed / self.config['intervals']['net_interval_ms'])
         self.download_curve.setData(self.download_graph_data)
 
