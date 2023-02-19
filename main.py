@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
         self.r_top_frame.setMaximumSize(QSize(600, 160))
         self.initUI()
         self.systemProcess()
-        self.middle_frame.setMaximumSize(QSize(370, 175))
+        self.middle_frame.setMaximumSize(QSize(0, 175))
         try:
             #pass
             self.weather.get_weather()

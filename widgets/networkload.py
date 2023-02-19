@@ -64,7 +64,7 @@ class NetworkLoad(QWidget):
         self.network_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.network_plot.getPlotItem().addLegend()
         self.network_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        self.network_plot.getPlotItem().enableAutoRange(axis='x', enable=True)
+        self.network_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
         self.network_plot.setLogMode(x=True, y=False)
         self.upload_curve = self.network_plot.plot(
             pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
