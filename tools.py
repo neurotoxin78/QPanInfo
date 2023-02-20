@@ -4,9 +4,16 @@ import toml
 from os import listdir
 from PyQt5.QtWidgets import (QWidget, QGraphicsDropShadowEffect)
 from rich.console import Console
+import random
 
 con = Console()
 
+
+def get_random_question():
+    with open('questions.txt', 'r') as file:
+        # Read all the lines into a list
+        lines = file.readlines()
+    return random.choice(lines)
 
 def setShadow(obj, blurradius: int):
     shadow = QGraphicsDropShadowEffect()
