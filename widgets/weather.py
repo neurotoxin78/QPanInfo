@@ -4,6 +4,7 @@ from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QLabel)
 from rich.console import Console
 from tools import get_config, loadStylesheet, degrees_to_cardinal, setShadow
+from decouple import config
 
 
 con = Console()
@@ -99,7 +100,7 @@ class Weather(QWidget):
             self.MainPanel.statusBar.showMessage("Неможливо оновити прогноз погоди", 3000)
 
     def get_weather(self):
-        api_key = self.config['weather']['api_key']
+        api_key = config('OPENWEATHER_API_KEY')
         base_url = self.config['weather']['url']
         city_name = self.config['weather']['city']
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&lang=UA"

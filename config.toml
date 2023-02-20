@@ -22,7 +22,6 @@ cpu_temp_sensor_path = "/sys/class/hwmon/hwmon1/temp1_input"
 interface = "enp39s0"
 
 [weather]
-api_key = "e7a63eca33717887514a746f7ab259f6"
 url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
 city = "Kyiv"
 
