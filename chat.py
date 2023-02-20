@@ -1,12 +1,12 @@
 from tools import get_config
-
+from decouple import config
 import openai
 
 
 class ChatBot():
     def __init__(self):
         self.config = get_config()
-        self.api_key = self.config['openai']['api_key']
+        self.api_key = config('OPENAI_API_KEY')
         self.model_engine = self.config['openai']['model_engine']
         self.prompt = ""
         openai.api_key = self.api_key

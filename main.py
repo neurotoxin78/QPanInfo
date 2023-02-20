@@ -14,7 +14,7 @@ from widgets.networkload import NetworkLoad
 from widgets.systemload import SystemLoad
 from widgets.volume import VolumeControl
 from widgets.weather import Weather
-from widgets.humor_gpt import GPTChat
+from widgets.chatgpt import GPTChat
 
 con = Console()
 
@@ -43,16 +43,15 @@ class MainWindow(QMainWindow):
         self.clock = Clock()
         self.mediaControl = MPDControl()
         self.launchButton = LaunchButton(self)
-        self.humorBox = GPTChat(self)
+        self.ChatBox = GPTChat(self)
         self.l_middle_frameLayout.addWidget(self.clock, 0, 0)
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
         self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
-        self.l_bottom_frameLayout.addWidget(self.humorBox, 0, 0, 1, 1)
-        #self.l_bottom_frameLayout.addWidget(self.mediaControl, 1, 0, 1, 1)
-        self.l_bottom_frameLayout.addWidget(self.launchButton, 2, 0, 1, 1)
-        self.r_top_frameLayout.addWidget(self.weather, 0, 0, Qt.AlignTop)
-        self.r_top_frame.setMaximumSize(QSize(600, 160))
+        self.l_bottom_frameLayout.addWidget(self.ChatBox, 1, 0)
+        self.l_bottom_frameLayout.addWidget(self.launchButton, 0, 0, 1, 1)
+        self.r_top_frameLayout.addWidget(self.weather, 0, 0, 1, 1, Qt.AlignHCenter)
+        #self.r_top_frame.setMaximumSize(QSize(600, 160))
         self.initUI()
         self.systemProcess()
         self.middle_frame.setMaximumSize(QSize(0, 175))

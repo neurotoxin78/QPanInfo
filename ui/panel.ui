@@ -60,7 +60,7 @@
       </property>
       <layout class="QGridLayout" name="left_frameLayout">
        <property name="leftMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="topMargin">
         <number>0</number>
@@ -69,7 +69,7 @@
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="horizontalSpacing">
         <number>0</number>
@@ -87,16 +87,16 @@
          </property>
          <layout class="QGridLayout" name="r_top_frameLayout">
           <property name="leftMargin">
-           <number>5</number>
+           <number>15</number>
           </property>
           <property name="topMargin">
-           <number>5</number>
+           <number>10</number>
           </property>
           <property name="rightMargin">
-           <number>5</number>
+           <number>15</number>
           </property>
           <property name="bottomMargin">
-           <number>5</number>
+           <number>10</number>
           </property>
          </layout>
         </widget>
@@ -112,6 +112,24 @@
          <layout class="QGridLayout" name="l_bottom_frameLayout">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>0</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>2</number>
           </property>
          </layout>
         </widget>
