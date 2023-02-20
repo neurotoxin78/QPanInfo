@@ -29,6 +29,6 @@ class ChatBot():
         # response = completion.choices[0].text
         return completion.choices
 
-chat = ChatBot()
-chat.setPrompt("Привіт, як справи?")
-print(chat.getResponce()[0].text)
+#chat = ChatBot()
+#chat.setPrompt("Привіт, як справи?")
+#print(chat.getResponce()[0].text)

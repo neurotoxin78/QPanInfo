@@ -12,6 +12,7 @@ network_refresh_ms = 5000
 cpu_temp_refresh_ms = 2000
 net_interval_ms = 200
 weather_fefresh_min = 10
+humor_fefresh_min = 1
 statusbar_msg_time_ms = 3000
 
 [cpu_temp]
@@ -26,7 +27,7 @@ url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
 city = "Kyiv"
 
 [openai]
-api_key = "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"
+api_key = "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"
 model_engine = "text-davinci-003"
 
 [colors]
