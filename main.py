@@ -14,7 +14,7 @@ from widgets.networkload import NetworkLoad
 from widgets.systemload import SystemLoad
 from widgets.volume import VolumeControl
 from widgets.weather import Weather
-from widgets.humor_gpt import GPTHumor
+from widgets.humor_gpt import GPTChat
 
 con = Console()
 
@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         self.clock = Clock()
         self.mediaControl = MPDControl()
         self.launchButton = LaunchButton(self)
-        self.humorBox = GPTHumor(self)
+        self.humorBox = GPTChat(self)
         self.l_middle_frameLayout.addWidget(self.clock, 0, 0)
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
