@@ -17,7 +17,7 @@ class NetworkLoad(QWidget):
         self.io = psutil.net_io_counters(pernic=True)
         self.upload_graph_data = deque()
         self.download_graph_data = deque()
-        self.graph_data_limit = 60
+        self.graph_data_limit = 30
         self.nettimer = QTimer()
         self.nettimer.timeout.connect(self.netStat)
         self.nettimer.start(self.config['intervals']['net_interval_ms'])
@@ -64,7 +64,7 @@ class NetworkLoad(QWidget):
         self.upload_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.upload_plot.getPlotItem().addLegend()
         self.upload_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        self.upload_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
+        #self.upload_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
         self.upload_plot.setLogMode(x=True, y=False)
         self.upload_curve = self.upload_plot.plot(
             pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
@@ -86,7 +86,7 @@ class NetworkLoad(QWidget):
         self.download_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.download_plot.getPlotItem().addLegend()
         self.download_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        self.download_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
+        #self.download_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
         self.download_plot.setLogMode(x=True, y=False)
         self.download_curve = self.download_plot.plot(
             pen=pg.mkPen('#009ceb', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o',
