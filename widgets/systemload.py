@@ -2,7 +2,6 @@ import psutil
 from PyQt5.QtCore import Qt, QSize, QCoreApplication, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar, QGraphicsDropShadowEffect)
-
 from tools import loadStylesheet, get_config, get_cputemp, setShadow
 
 

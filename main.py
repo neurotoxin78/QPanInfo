@@ -1,11 +1,9 @@
 import gc
 import sys
-
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer, QSize
 from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow)
 from rich.console import Console
-
 from tools import extended_exception_hook, get_config, loadStylesheet, setShadow
 from widgets.chatgpt import GPTChat
 from widgets.clock import Clock
