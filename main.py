@@ -51,7 +51,6 @@ class MainWindow(QMainWindow):
         self.l_bottom_frameLayout.addWidget(self.ChatBox, 1, 0)
         self.l_bottom_frameLayout.addWidget(self.launchButton, 0, 0, 1, 1)
         self.r_top_frameLayout.addWidget(self.weather, 0, 0, 1, 1, Qt.AlignHCenter)
-        #self.r_top_frame.setMaximumSize(QSize(600, 160))
         self.initUI()
         self.systemProcess()
         self.middle_frame.setMaximumSize(QSize(0, 175))
@@ -60,7 +59,6 @@ class MainWindow(QMainWindow):
             self.weather.get_weather()
         except:
             pass
-        #self.humorBox.refresh()
 
 
     def initUI(self):

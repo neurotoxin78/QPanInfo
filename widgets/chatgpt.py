@@ -1,40 +1,95 @@
 
+import openai
 from PyQt5 import uic
-from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtCore import QObject, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QColor, QFont
-from PyQt5.QtWidgets import (QWidget, QGridLayout, QTextBrowser)
+from PyQt5.QtWidgets import (QWidget)
+from decouple import config
+
 from tools import get_config, get_random_question
-from chat import ChatBot
+
+
+class ChatBot():
+    def __init__(self):
+        self.config = get_config()
+        self.api_key = config('OPENAI_API_KEY')
+        self.model_engine = self.config['openai']['model_engine']
+        self._prompt = ""
+        openai.api_key = self.api_key
+
+    @property
+    def prompt(self):
+        return self._prompt
+    @prompt.setter
+    def prompt(self, prompt: str):
+        self._prompt = prompt
+
+
+    def getResponce(self, max_tokens=1024, n=1, stop=None, temperature=0.5):
+        # Generate a response
+        try:
+            completion = openai.Completion.create(
+                engine=self.model_engine,
+                prompt=self._prompt,
+                max_tokens=max_tokens,
+                n=n,
+                stop=stop,
+                temperature=temperature,
+            )
+            return completion.choices
+
+        except openai.error.Timeout as e:
+            # Handle timeout error, e.g. retry or log
+            return f"OpenAI API request timed out: {e}"
+
+        except openai.error.APIError as e:
+            # Handle API error, e.g. retry or log
+            return f"OpenAI API returned an API Error: {e}"
+
+        except openai.error.APIConnectionError as e:
+            # Handle connection error, e.g. check network or log
+            return f"OpenAI API request failed to connect: {e}"
+
+        except openai.error.InvalidRequestError as e:
+            # Handle invalid request error, e.g. validate parameters or log
+            print(f"OpenAI API request was invalid: {e}")
+
+        except openai.error.AuthenticationError as e:
+            # Handle authentication error, e.g. check credentials or log
+            return f"OpenAI API request was not authorized: {e}"
+
+        except openai.error.PermissionError as e:
+            # Handle permission error, e.g. check scope or log
+            return f"OpenAI API request was not permitted: {e}"
+
+        except openai.error.RateLimitError as e:
+            # Handle rate limit error, e.g. wait or log
+            return f"OpenAI API request exceeded rate limit: {e}"
+
+
 
 
 class BrowserHandler(QObject):
     running = False
     newTextAndColor = pyqtSignal(str, object)
-
+    config = get_config()
+    refresh_interval = (int(config['intervals']['chatbot_fefresh_min']) * 1024) * 60
+    chatbot = ChatBot()
     # method which will execute algorithm in another thread
     def run(self):
-        config = get_config()
-        refresh_interval = (int(config['intervals']['humor_fefresh_min']) * 1024) * 60
-        chatbot = ChatBot()
+
         while True:
+            # send signal with new text and color from aonther thread
+            question = get_random_question()
+            print(question)
+            self.chatbot.prompt = question
+            response = self.chatbot.getResponce(max_tokens=1024, n=1, stop=None, temperature=0.5)
             try:
-                # send signal with new text and color from aonther thread
-                question = get_random_question()
-                print(question)
-                chatbot.setPrompt(question)
-                response = chatbot.getResponce(max_tokens=1024, n=1, stop=None, temperature=0.5)
-                humor_text = response[0].text
-                self.newTextAndColor.emit(
-                    '{}.'.format(humor_text),
-                    QColor(255, 255, 255)
-                )
+                response_text = response[0].text
             except:
-                self.newTextAndColor.emit("Error! See log for details", QColor(255, 128, 128))
-
-            QThread.msleep(refresh_interval)
-
-
+                response_text = response
+            self.newTextAndColor.emit('{}'.format(response_text), QColor(255, 255, 255))
+            QThread.msleep(self.refresh_interval)
 
 
 class GPTChat(QWidget):

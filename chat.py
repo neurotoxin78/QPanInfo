@@ -15,7 +15,7 @@ class ChatBot():
         self.prompt = prompt
         # Set up the model and prompt
 
-    def getResponce(self, max_tokens=1024, n=1, stop=None, temperature=0.5 ):
+    def getResponce(self, max_tokens=1024, n=1, stop=None, temperature=0.5):
         # Generate a response
         completion = openai.Completion.create(
             engine=self.model_engine,
@@ -29,6 +29,7 @@ class ChatBot():
         # response = completion.choices[0].text
         return completion.choices
 
-#chat = ChatBot()
-#chat.setPrompt("Привіт, як справи?")
-#print(chat.getResponce()[0].text)
+
+c = ChatBot()
+c.setPrompt("Funny Joke")
+print(c.getResponce())
