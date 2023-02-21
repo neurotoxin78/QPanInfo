@@ -36,3 +36,4 @@ we_condition_color = "rgba(220, 250, 255, 250)"
 we_wind_speed_color = "rgba(220, 250, 255, 250)"
 we_wind_dir_color = "rgba(220, 250, 255, 250)"
 clock_color = "rgba(255, 255, 255, 255)"
+

@@ -48,9 +48,9 @@ class Weather(QWidget):
     def setupUI(self):
         self.we_condition.setIconSize(QSize(96, 96))
         self.we_condition.clicked.connect(self.refresh)
-        self.layout.addWidget(self.we_condition, 0, 5, 2, 3, Qt.AlignCenter)
-        self.layout.addWidget(self.wind_speed, 1, 0, 1, 3, Qt.AlignLeft)
-        self.layout.addWidget(self.wind_dir, 1, 3, 1, 3, Qt.AlignLeft)
+        self.layout.addWidget(self.we_condition, 0, 6, 5, 5, Qt.AlignCenter)
+        self.layout.addWidget(self.wind_speed, 1, 0, 1, 4, Qt.AlignLeft)
+        self.layout.addWidget(self.wind_dir, 1, 4, 1, 3, Qt.AlignLeft)
         self.layout.addWidget(self.we_condition_description, 0, 0, 1, 4, Qt.AlignCenter)
         self.layout.addWidget(self.temp_img, 3, 0)
         self.layout.addWidget(self.current_temperature, 3, 1)
