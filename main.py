@@ -48,12 +48,11 @@ class MainWindow(QMainWindow):
         self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
         self.l_bottom_frameLayout.addWidget(self.ChatBox, 1, 0)
         self.l_bottom_frameLayout.addWidget(self.launchButton, 0, 0, 1, 1)
-        self.r_top_frameLayout.addWidget(self.weather, 0, 0, 1, 1, Qt.AlignHCenter)
+        self.l_top_frameLayout.addWidget(self.weather, 0, 0, 1, 1, Qt.AlignHCenter)
         self.initUI()
         self.systemProcess()
         self.middle_frame.setMaximumSize(QSize(0, 175))
         try:
-            # pass
             self.weather.get_weather()
         except:
             pass
