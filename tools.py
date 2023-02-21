@@ -1,10 +1,11 @@
+import random
 import socket
 import sys
-import toml
 from os import listdir
-from PyQt5.QtWidgets import (QWidget, QGraphicsDropShadowEffect)
+
+import toml
+from PyQt5.QtWidgets import (QGraphicsDropShadowEffect)
 from rich.console import Console
-import random
 
 con = Console()
 
@@ -15,13 +16,16 @@ def get_random_question():
         lines = file.readlines()
     return random.choice(lines)
 
+
 def setShadow(obj, blurradius: int):
     shadow = QGraphicsDropShadowEffect()
     shadow.setBlurRadius(blurradius)
     obj.setGraphicsEffect(shadow)
 
+
 def get_apps_list(path):
     return listdir(path)
+
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -36,13 +40,16 @@ def get_ip():
         s.close()
     return IP
 
+
 def get_config():
     return toml.load("config.toml")
 
-def get_cputemp(sensor  : str):
+
+def get_cputemp(sensor: str):
     with open(sensor) as cpu_term:
         raw_t = float(cpu_term.read()) / 1000
         return raw_t
+
 
 def get_size(bytes):
     """
@@ -52,6 +59,7 @@ def get_size(bytes):
         if bytes < 1024:
             return f"{bytes:.1f}{unit}B"
         bytes /= 1024
+
 
 def extended_exception_hook(exec_type, value, traceback):
     # Print the error and traceback
@@ -64,6 +72,7 @@ def extended_exception_hook(exec_type, value, traceback):
 def loadStylesheet(sshFile):
     with open(sshFile, "r") as fh:
         return fh.read()
+
 
 def degrees_to_cardinal(d):
     '''

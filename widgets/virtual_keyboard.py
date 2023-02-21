@@ -1,9 +1,10 @@
 """ ui module
 """
 
-from PyQt5 import QtWidgets, QtGui, QtCore
 import threading
 import time
+
+from PyQt5 import QtWidgets, QtGui, QtCore
 
 
 class KeyButton(QtWidgets.QPushButton):
@@ -26,13 +27,17 @@ class KeyButton(QtWidgets.QPushButton):
         self.set_key(key)
         self.clicked.connect(self.emit_key)
         if key == "Backspace":
-            self.setStyleSheet("QPushButton {min-width: 100px;font-size: 20px; font-family: Noto Sans CJK JP;max-width: 200px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.setStyleSheet(
+                "QPushButton {min-width: 100px;font-size: 20px; font-family: Noto Sans CJK JP;max-width: 200px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         elif key == "  ":
-            self.setStyleSheet("QPushButton {min-width: 100px;font-size: 20px;font-family: Noto Sans CJK JP; max-width: 200px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.setStyleSheet(
+                "QPushButton {min-width: 100px;font-size: 20px;font-family: Noto Sans CJK JP; max-width: 200px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         elif key == " ":
-            self.setStyleSheet("QPushButton {min-width: 450px;font-size: 20px;font-family: Noto Sans CJK JP; max-width: 550px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.setStyleSheet(
+                "QPushButton {min-width: 450px;font-size: 20px;font-family: Noto Sans CJK JP; max-width: 550px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         else:
-            self.setStyleSheet("QPushButton {min-width: 80px;font-size: 20px;font-family: Noto Sans CJK JP; max-width: 80px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.setStyleSheet(
+                "QPushButton {min-width: 80px;font-size: 20px;font-family: Noto Sans CJK JP; max-width: 80px; min-height:40px; max-height: 40px; border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
 
     def set_key(self, key):
@@ -74,6 +79,7 @@ class KeyButton(QtWidgets.QPushButton):
 class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
     """ AlphaNeumericVirtualKeyboard class
     """
+
     def __init__(self, source, x_pos=0, y_pos=0, parent=None):
         """ AlphaNeumericVirtualKeyboard class constructor
 
@@ -119,22 +125,22 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
         self.isHidden = True
         self.close_ui_scroll = None
         self.key_list_by_lines_lower = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '.'],
-        ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', 'Backspace'],
-        ['Caps', ' ', 'Sym', 'Close', '  ']]
+                                        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+                                        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '.'],
+                                        ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', 'Backspace'],
+                                        ['Caps', ' ', 'Sym', 'Close', '  ']]
 
         self.key_list_by_lines_caps = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-        ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-        ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '.'],
-        ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', 'Backspace'],
-        ['Caps', ' ', 'Sym', 'Close' , '  ']]
+                                       ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                                       ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '.'],
+                                       ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', 'Backspace'],
+                                       ['Caps', ' ', 'Sym', 'Close', '  ']]
 
         self.key_list_by_lines_sym = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-        ['~', '`', '@', '#', '$', '%', '^', '&&', '*', '('],
-        [')', '_', '-', '+', '=', '|', '[', ']', '{', "'"],
-        ['}', '"', '<', '>', '?', '/', '\\', '!', 'Backspace'],
-        ['Caps', ' ', 'Sym', 'Close', '  ']]
+                                      ['~', '`', '@', '#', '$', '%', '^', '&&', '*', '('],
+                                      [')', '_', '-', '+', '=', '|', '[', ']', '{', "'"],
+                                      ['}', '"', '<', '>', '?', '/', '\\', '!', 'Backspace'],
+                                      ['Caps', ' ', 'Sym', 'Close', '  ']]
 
         self.array_buttons = [[0 for x in range(10)] for y in range(5)]
 
@@ -146,17 +152,20 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
             self.caps_state = 1
             self.sym_state = 0
             keys = self.key_list_by_lines_caps
-            self.caps_button.setStyleSheet("background-color:rgb(29, 150, 255);font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px; min-height:42px; max-height: 42px; width: 120px;")
+            self.caps_button.setStyleSheet(
+                "background-color:rgb(29, 150, 255);font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px; min-height:42px; max-height: 42px; width: 120px;")
         else:
             self.caps_state = 0
             keys = self.key_list_by_lines_lower
-            self.caps_button.setStyleSheet("QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.caps_button.setStyleSheet(
+                "QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         for lineIndex, line in enumerate(keys):
             for keyIndex, key in enumerate(line):
-                if key != ' ' and key != '  'and key != 'Backspace' and key != 'CAPS' and key != 'Close' and key != 'Sym':
+                if key != ' ' and key != '  ' and key != 'Backspace' and key != 'CAPS' and key != 'Close' and key != 'Sym':
                     button = self.array_buttons[lineIndex][keyIndex]
                     button.setText(key)
-        self.sym_button.setStyleSheet("QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+        self.sym_button.setStyleSheet(
+            "QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         self.sym_state = 0
 
     def hide(self, animation=False):
@@ -168,22 +177,26 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
         if not self.sym_state:
             self.sym_state = 1
             keys = self.key_list_by_lines_sym
-            self.sym_button.setStyleSheet("background-color:rgb(29, 150, 255);font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px; min-height:42px; max-height: 42px; width: 120px;")
+            self.sym_button.setStyleSheet(
+                "background-color:rgb(29, 150, 255);font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px; min-height:42px; max-height: 42px; width: 120px;")
         elif self.caps_state:
             self.sym_state = 0
             keys = self.key_list_by_lines_caps
-            self.sym_button.setStyleSheet("QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.sym_button.setStyleSheet(
+                "QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         else:
             self.sym_state = 0
             keys = self.key_list_by_lines_lower
-            self.sym_button.setStyleSheet("QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
+            self.sym_button.setStyleSheet(
+                "QPushButton {font-size: 20px;font-family: Noto Sans CJK JP;border: 3px solid #8f8f91;border-radius: 8px;background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #f6f7fa, stop: 1 #dadbde);min-height:42px; max-height: 42px; width: 120px;}\nQPushButton:pressed {background-color: rgb(29, 150, 255);}")
         for lineIndex, line in enumerate(keys):
             for keyIndex, key in enumerate(line):
                 if key != ' ' and key != '  ' and key != 'Backspace' and key != 'Caps' and key != 'Close' and key != 'Sym':
                     button = self.array_buttons[lineIndex][keyIndex]
                     button.setText(key)
 
-    def display(self, source=None, event=None, ui_Scroll=None, closeButtonEnable=False, call_back=None, constraint=0, moveUp=False):
+    def display(self, source=None, event=None, ui_Scroll=None, closeButtonEnable=False, call_back=None, constraint=0,
+                moveUp=False):
         """ AlphaNeumericVirtualKeyboard class method to display virtual keypad
 
         Parameters
@@ -228,7 +241,8 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
                         self.keys_layout.addWidget(self.caps_button, lineIndex, keyIndex)
                         self.caps_button.key_button_clicked_signal.connect(self.convert_to_caps)
                         if self.caps_state == 1:
-                            self.caps_button.setStyleSheet("background-color:rgb(29, 150, 255);border: 3px solid #8f8f91;border-radius: 8px; min-height:42px; max-height: 42px; width: 120px;")
+                            self.caps_button.setStyleSheet(
+                                "background-color:rgb(29, 150, 255);border: 3px solid #8f8f91;border-radius: 8px; min-height:42px; max-height: 42px; width: 120px;")
                     elif key == 'Close':
                         self.array_buttons[lineIndex][keyIndex] = self.close_button
                         self.keys_layout.addWidget(self.close_button, lineIndex, 7)
@@ -238,7 +252,8 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
                         self.keys_layout.addWidget(self.sym_button, lineIndex, 6)
                         self.sym_button.key_button_clicked_signal.connect(self.open_symbol)
                         if self.sym_state == 1:
-                            self.sym_button.setStyleSheet("background-color:rgb(29, 150, 255);border: 3px solid #8f8f91;border-radius: 8px;min-height:42px; max-height: 42px; width: 120px;")
+                            self.sym_button.setStyleSheet(
+                                "background-color:rgb(29, 150, 255);border: 3px solid #8f8f91;border-radius: 8px;min-height:42px; max-height: 42px; width: 120px;")
                     else:
                         button = KeyButton(key, self.parent)
                         self.array_buttons[lineIndex][keyIndex] = button
@@ -257,7 +272,7 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
 
         for lineIndex, line in enumerate(self.key_list_by_lines_lower):
             for keyIndex, key in enumerate(line):
-                if(lineIndex):
+                if (lineIndex):
                     button = self.array_buttons[lineIndex][keyIndex]
                     button.setDisabled(False)
 
@@ -268,9 +283,10 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
         elif constraint == self.numberOnly or constraint == self.fractionNumber:
             for lineIndex, line in enumerate(self.key_list_by_lines_lower):
                 for keyIndex, key in enumerate(line):
-                    if(lineIndex):
+                    if (lineIndex):
                         button = self.array_buttons[lineIndex][keyIndex]
-                        if not (button.text() == "Backspace" or button.text() == "Enter") and ((constraint == self.fractionNumber and not button.text() == ".") or constraint == self.numberOnly):
+                        if not (button.text() == "Backspace" or button.text() == "Enter") and ((
+                                                                                                       constraint == self.fractionNumber and not button.text() == ".") or constraint == self.numberOnly):
                             button.setDisabled(True)
         else:
             self.caps_state = 1
@@ -359,7 +375,7 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
                 end = temp
 
             input_text = self.source.toPlainText()
-            if(key_to_add == '  '):
+            if (key_to_add == '  '):
                 key_to_add = "\n"
             output_string = input_text[:start] + key_to_add + input_text[end:]
             self.source.setPlainText(output_string)
@@ -369,7 +385,7 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
             if self.callback_method:
                 self.callback_method("textChange")
         else:
-            if(key_to_add == '  '):
+            if (key_to_add == '  '):
                 eventPress = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, QtCore.Qt.Key_Enter, QtCore.Qt.NoModifier)
                 QtCore.QCoreApplication.postEvent(self.source, eventPress)
                 eventRelease = QtGui.QKeyEvent(QtCore.QEvent.KeyRelease, QtCore.Qt.Key_Enter, QtCore.Qt.NoModifier)
@@ -380,7 +396,8 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
                     return
                 eventPress = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, QtCore.Qt.Key_1, QtCore.Qt.NoModifier, key_to_add)
                 QtCore.QCoreApplication.postEvent(self.source, eventPress)
-                eventRelease = QtGui.QKeyEvent(QtCore.QEvent.KeyRelease, QtCore.Qt.Key_1, QtCore.Qt.NoModifier, key_to_add)
+                eventRelease = QtGui.QKeyEvent(QtCore.QEvent.KeyRelease, QtCore.Qt.Key_1, QtCore.Qt.NoModifier,
+                                               key_to_add)
                 QtCore.QCoreApplication.postEvent(self.source, eventRelease)
                 return
 
@@ -462,15 +479,15 @@ class AlphaNeumericVirtualKeyboard(QtWidgets.QWidget):
         event.accept()
 
 
-class BackSpaceSignal (QtCore.QObject):
+class BackSpaceSignal(QtCore.QObject):
     signal = QtCore.pyqtSignal()
 
 
-class signalAnimation (QtCore.QObject):
+class signalAnimation(QtCore.QObject):
     signal = QtCore.pyqtSignal(int)
 
 
-class AnimationThread (QtCore.QThread):
+class AnimationThread(QtCore.QThread):
 
     def __init__(self, signal, parent):
         super(AnimationThread, self).__init__(parent)
@@ -482,7 +499,7 @@ class AnimationThread (QtCore.QThread):
             time.sleep(0.01)
 
 
-class keyPressHandlerThread (QtCore.QThread):
+class keyPressHandlerThread(QtCore.QThread):
 
     def __init__(self, signal, key, parent):
         super(keyPressHandlerThread, self).__init__(parent)

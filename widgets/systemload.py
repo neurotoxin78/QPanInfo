@@ -1,8 +1,10 @@
+import psutil
 from PyQt5.QtCore import Qt, QSize, QCoreApplication, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel, QProgressBar, QGraphicsDropShadowEffect)
+
 from tools import loadStylesheet, get_config, get_cputemp, setShadow
-import psutil
+
 
 class SystemLoad(QWidget):
     def __init__(self, *args, **kwargs):
@@ -26,8 +28,8 @@ class SystemLoad(QWidget):
         self.sensor_frame.setMinimumSize(QSize(0, 135))
         self.sensor_frame.setMaximumSize(QSize(16777215, 135))
         self.sensor_frame.setStyleSheet("background-color: rgba(85, 85, 127, 160);")
-        #self.sensor_frame.setFrameShape(QFrame.NoFrame)
-        #self.sensor_frame.setFrameShadow(QFrame.Raised)
+        # self.sensor_frame.setFrameShape(QFrame.NoFrame)
+        # self.sensor_frame.setFrameShadow(QFrame.Raised)
         self.sensor_frame.setObjectName("sensor_frame")
         self.sensor_frameLayout = QGridLayout(self.sensor_frame)
         self.sensor_frameLayout.setObjectName("sensor_frameLayout")

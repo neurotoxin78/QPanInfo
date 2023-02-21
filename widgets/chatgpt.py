@@ -1,4 +1,3 @@
-
 import openai
 from PyQt5 import uic
 from PyQt5.QtCore import QObject, QThread, pyqtSignal, pyqtSlot
@@ -20,10 +19,10 @@ class ChatBot():
     @property
     def prompt(self):
         return self._prompt
+
     @prompt.setter
     def prompt(self, prompt: str):
         self._prompt = prompt
-
 
     def getResponce(self, max_tokens=1024, n=1, stop=None, temperature=0.5):
         # Generate a response
@@ -67,14 +66,13 @@ class ChatBot():
             return f"OpenAI API request exceeded rate limit: {e}"
 
 
-
-
 class BrowserHandler(QObject):
     running = False
     newTextAndColor = pyqtSignal(str, object)
     config = get_config()
     refresh_interval = (int(config['intervals']['chatbot_fefresh_min']) * 1024) * 60
     chatbot = ChatBot()
+
     # method which will execute algorithm in another thread
     def run(self):
 

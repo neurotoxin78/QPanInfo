@@ -1,7 +1,6 @@
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import (QWidget, QCompleter)
+from PyQt5.QtWidgets import (QWidget)
+
 from tools import get_config
 
 

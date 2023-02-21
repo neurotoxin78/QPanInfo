@@ -1,10 +1,12 @@
+from collections import deque
+
 import psutil
+import pyqtgraph as pg
 from PyQt5.QtCore import Qt, QSize, QTimer, QRect
 from PyQt5.QtGui import QFont, QBrush, QColor
 from PyQt5.QtWidgets import (QFrame, QWidget, QGridLayout, QLabel)
-from collections import deque
-import pyqtgraph as pg
 from pyqtgraph import PlotWidget
+
 from tools import get_ip, get_config, get_size, loadStylesheet, setShadow
 
 
@@ -57,17 +59,18 @@ class NetworkLoad(QWidget):
         self.upload_plot.setObjectName("upload_plot")
         background = QBrush()
         background.setColor(QColor(0x31363b))
-        #l = pg.LegendItem((10, 10), offset=(60, 92))  # args are (size, offset)
+        # l = pg.LegendItem((10, 10), offset=(60, 92))  # args are (size, offset)
         # l.setParentItem(self.network_plot.graphicsItem())   # Note we do NOT call plt.addItem in this case
         self.upload_plot.setBackground(background)
         # self.network_plot.addLegend()
         self.upload_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.upload_plot.getPlotItem().addLegend()
         self.upload_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        #self.upload_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
+        # self.upload_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
         self.upload_plot.setLogMode(x=True, y=False)
         self.upload_curve = self.upload_plot.plot(
-            pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o', symbolSize=14,
+            pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o',
+                         symbolSize=14,
                          style=Qt.SolidLine))
         # l.addItem(self.curve, 'upload')
         self.upload_plot.getPlotItem().hideAxis('bottom')
@@ -86,7 +89,7 @@ class NetworkLoad(QWidget):
         self.download_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.download_plot.getPlotItem().addLegend()
         self.download_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        #self.download_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
+        # self.download_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
         self.download_plot.setLogMode(x=True, y=False)
         self.download_curve = self.download_plot.plot(
             pen=pg.mkPen('#009ceb', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o',
@@ -133,7 +136,7 @@ class NetworkLoad(QWidget):
         iface = self.config['network']['interface']
         iface_io = self.io[iface]
         upload_speed, download_speed = io_2[iface].bytes_sent - iface_io.bytes_sent, \
-            io_2[iface].bytes_recv - iface_io.bytes_recv
+                                       io_2[iface].bytes_recv - iface_io.bytes_recv
 
         up_speed = upload_speed / self.config['intervals']['net_interval_ms']
         dn_speed = download_speed / self.config['intervals']['net_interval_ms']
@@ -142,13 +145,13 @@ class NetworkLoad(QWidget):
         self.dnLabel.setText(f"\uf063 {get_size(dn_speed)}/s")
 
         if len(self.upload_graph_data) > self.graph_data_limit:
-            self.upload_graph_data.popleft() #remove oldest
+            self.upload_graph_data.popleft()  # remove oldest
 
         self.upload_graph_data.append(upload_speed / self.config['intervals']['net_interval_ms'])
         self.upload_curve.setData(self.upload_graph_data)
 
         if len(self.download_graph_data) > self.graph_data_limit:
-            self.download_graph_data.popleft() #remove oldest
+            self.download_graph_data.popleft()  # remove oldest
 
         self.download_graph_data.append(download_speed / self.config['intervals']['net_interval_ms'])
         self.download_curve.setData(self.download_graph_data)

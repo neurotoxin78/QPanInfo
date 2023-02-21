@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QFrame, QWidget, QHBoxLayout, QLabel, QDial)
 from pulsectl import Pulse
+
 from tools import loadStylesheet, setShadow
 
 

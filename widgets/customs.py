@@ -6,5 +6,3 @@ class VLine(QFrame):
     def __init__(self):
         super(VLine, self).__init__()
         self.setFrameShape(self.VLine | self.Sunken)
-
-

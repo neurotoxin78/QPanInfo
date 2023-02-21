@@ -1,6 +1,7 @@
-from tools import get_config
-from decouple import config
 import openai
+from decouple import config
+
+from tools import get_config
 
 
 class ChatBot():

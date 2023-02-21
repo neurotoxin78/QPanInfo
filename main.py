@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow)
 from rich.console import Console
 
 from tools import extended_exception_hook, get_config, loadStylesheet, setShadow
+from widgets.chatgpt import GPTChat
 from widgets.clock import Clock
 from widgets.launcher import LaunchButton
 from widgets.mpdcontrol import MPDControl
@@ -14,7 +15,6 @@ from widgets.networkload import NetworkLoad
 from widgets.systemload import SystemLoad
 from widgets.volume import VolumeControl
 from widgets.weather import Weather
-from widgets.chatgpt import GPTChat
 
 con = Console()
 
@@ -55,11 +55,10 @@ class MainWindow(QMainWindow):
         self.systemProcess()
         self.middle_frame.setMaximumSize(QSize(0, 175))
         try:
-            #pass
+            # pass
             self.weather.get_weather()
         except:
             pass
-
 
     def initUI(self):
         stylesheet = "stylesheets/panel.qss"
@@ -70,7 +69,6 @@ class MainWindow(QMainWindow):
         setShadow(self.middle_frame, 20)
         setShadow(self.r_top_frame, 20)
         setShadow(self.bottom_frame, 20)
-
 
     def systemProcess(self):
         gc.collect()
