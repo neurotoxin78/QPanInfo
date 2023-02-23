@@ -12,7 +12,7 @@ network_refresh_ms = 5000
 cpu_temp_refresh_ms = 2000
 net_interval_ms = 200
 weather_fefresh_min = 10
-chatbot_fefresh_min = 10
+chatbot_fefresh_min = 30
 statusbar_msg_time_ms = 3000
 
 [cpu_temp]
@@ -20,6 +20,7 @@ cpu_temp_sensor_path = "/sys/class/hwmon/hwmon1/temp1_input"
 
 [network]
 interface = "enp39s0"
+graph_data_limit = 60
 
 [weather]
 url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
