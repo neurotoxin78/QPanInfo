@@ -68,16 +68,15 @@ class ChatBot():
 
 class BrowserHandler(QObject):
     running = False
-    newTextAndColor = pyqtSignal(str, object)
+    update_text = pyqtSignal(str, object)
+
     config = get_config()
     refresh_interval = (int(config['intervals']['chatbot_fefresh_min']) * 1024) * 60
     chatbot = ChatBot()
 
-    # method which will execute algorithm in another thread
     def run(self):
 
         while True:
-            # send signal with new text and color from aonther thread
             question = get_random_question()
             print(question)
             self.chatbot.prompt = question
@@ -86,7 +85,7 @@ class BrowserHandler(QObject):
                 response_text = response[0].text
             except:
                 response_text = response
-            self.newTextAndColor.emit('{}'.format(response_text), QColor(255, 255, 255))
+            self.update_text.emit('{}'.format(response_text), QColor(255, 255, 255))
             QThread.msleep(self.refresh_interval)
 
 
@@ -104,6 +103,8 @@ class GPTChat(QWidget):
         font.setWeight(100)
         self.answer_box.setFont(font)
         self.answer_box.setAcceptRichText(True)
+        self.answer_box.mousePressEvent = self.update_chat
+
         # create thread
         self.thread = QThread()
         # create object which will be moved to another thread
@@ -111,11 +112,15 @@ class GPTChat(QWidget):
         # move object to another thread
         self.browserHandler.moveToThread(self.thread)
         # after that, we can connect signals from this object to slot in GUI thread
-        self.browserHandler.newTextAndColor.connect(self.updateText)
+        self.browserHandler.update_text.connect(self.updateText)
         # connect started signal to run method of object in another thread
         self.thread.started.connect(self.browserHandler.run)
         # start thread
         self.thread.start()
+
+    def update_chat(self, event):
+        print("Click")
+
 
     @pyqtSlot(str, object)
     def updateText(self, string, color):

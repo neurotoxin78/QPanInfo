@@ -2,7 +2,7 @@ import gc
 import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import Qt, QTimer, QSize
-from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow)
+from PyQt5.QtWidgets import (QDesktopWidget, QMainWindow, QMenu, QAction)
 from rich.console import Console
 from tools import extended_exception_hook, get_config, loadStylesheet, setShadow
 from widgets.chatgpt import GPTChat
@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnBottomHint)
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.setMouseTracking(True)
         self.systimer = QTimer()
         self.systimer.timeout.connect(self.systemProcess)
         self.systimer.start(self.config['intervals']['sys_proc_refresh_ms'])
@@ -70,6 +71,18 @@ class MainWindow(QMainWindow):
     def systemProcess(self):
         gc.collect()
         self.statusBar.showMessage("Вивільнення пам'яті...", self.config['intervals']['statusbar_msg_time_ms'])
+
+    def mouseMoveEvent(self, event):
+        print("Mouse move")
+        super(MainWindow, self).mouseMoveEvent(event)
+
+
+    def contextMenuEvent(self, e):
+        context = QMenu(self)
+        context.addAction(QAction("test 1", self))
+        context.addAction(QAction("test 2", self))
+        context.addAction(QAction("test 3", self))
+        context.exec(e.globalPos())
 
 
 def main():

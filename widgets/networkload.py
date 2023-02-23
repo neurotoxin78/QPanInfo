@@ -59,20 +59,16 @@ class NetworkLoad(QWidget):
         self.upload_plot.setObjectName("upload_plot")
         background = QBrush()
         background.setColor(QColor(0x31363b))
-        # l = pg.LegendItem((10, 10), offset=(60, 92))  # args are (size, offset)
-        # l.setParentItem(self.network_plot.graphicsItem())   # Note we do NOT call plt.addItem in this case
         self.upload_plot.setBackground(background)
-        # self.network_plot.addLegend()
         self.upload_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.upload_plot.getPlotItem().addLegend()
         self.upload_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        # self.upload_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
-        self.upload_plot.setLogMode(x=True, y=False)
+        self.upload_plot.getPlotItem().invertY()
+        #self.upload_plot.getPlotItem().invertX()
         self.upload_curve = self.upload_plot.plot(
             pen=pg.mkPen('#009637', width=1, name="upload", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o',
                          symbolSize=14,
                          style=Qt.SolidLine))
-        # l.addItem(self.curve, 'upload')
         self.upload_plot.getPlotItem().hideAxis('bottom')
         self.upload_plot.getPlotItem().hideAxis('left')
         # DOWNLOAD PLOT
@@ -82,20 +78,15 @@ class NetworkLoad(QWidget):
         self.download_plot.setObjectName("upload_plot")
         background = QBrush()
         background.setColor(QColor(0x31363b))
-        # l = pg.LegendItem((10, 10), offset=(60, 92))  # args are (size, offset)
-        # l.setParentItem(self.network_plot.graphicsItem())   # Note we do NOT call plt.addItem in this case
         self.download_plot.setBackground(background)
-        # self.network_plot.addLegend()
         self.download_plot.plotItem.showGrid(x=True, y=True, alpha=0.8)
         self.download_plot.getPlotItem().addLegend()
         self.download_plot.getPlotItem().enableAutoRange(axis='y', enable=True)
-        # self.download_plot.getPlotItem().enableAutoRange(axis='x', enable=False)
-        self.download_plot.setLogMode(x=True, y=False)
+        self.download_plot.getPlotItem().invertX()
         self.download_curve = self.download_plot.plot(
             pen=pg.mkPen('#009ceb', width=1, name="download", symbolBrush=(0, 0, 200), symbolPen='w', symbol='o',
                          symbolSize=14,
                          style=Qt.SolidLine))
-        # l.addItem(self.curve, 'upload')
         self.download_plot.getPlotItem().hideAxis('bottom')
         self.download_plot.getPlotItem().hideAxis('left')
         # Add Plots to layout

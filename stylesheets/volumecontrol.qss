@@ -1,7 +1,7 @@
 /*-----QFrame----*/
 QFrame {
     border: 1px rgba(85, 85, 127, 100);;
-    border-radius: 16px;
+    border-radius: 25px;
     padding: 2px;
     background-color: rgba(85, 85, 127, 75);
 }
