@@ -80,7 +80,7 @@ class BrowserHandler(QObject):
             question = get_random_question()
             print(question)
             self.chatbot.prompt = question
-            response = self.chatbot.getResponce(max_tokens=1024, n=1, stop=None, temperature=0.5)
+            response = self.chatbot.getResponce(max_tokens=256, n=1, stop="stop", temperature=0.2)
             try:
                 response_text = response[0].text
             except:

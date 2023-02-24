@@ -12,7 +12,7 @@ network_refresh_ms = 5000
 cpu_temp_refresh_ms = 2000
 net_interval_ms = 200
 weather_fefresh_min = 10
-chatbot_fefresh_min = 30
+chatbot_fefresh_min = 5
 statusbar_msg_time_ms = 3000
 
 [cpu_temp]
