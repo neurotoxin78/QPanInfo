@@ -13,6 +13,7 @@ from widgets.networkload import NetworkLoad
 from widgets.systemload import SystemLoad
 from widgets.volume import VolumeControl
 from widgets.weather import Weather
+from widgets.powermon import PowerMonitor
 
 con = Console()
 
@@ -37,17 +38,21 @@ class MainWindow(QMainWindow):
         self.r_top_frame.setStyleSheet(loadStylesheet("stylesheets/weather.qss"))
         self.weather = Weather(self)
         self.systemLoad = SystemLoad()
+        if self.config['powermon']['visible']:
+            self.powerMon = PowerMonitor()
+            self.l_bottom_frameLayout.addWidget(self.powerMon, 1, 0)
         self.networkLoad = NetworkLoad()
         self.volumeControl = VolumeControl()
         self.clock = Clock()
         self.mediaControl = MPDControl()
         self.launchButton = LaunchButton(self)
-        self.ChatBox = GPTChat(self)
+        if self.config['openai']['visible']:
+            self.ChatBox = GPTChat(self)
         self.l_middle_frameLayout.addWidget(self.clock, 0, 0)
         self.top_frameLayout.addWidget(self.systemLoad, 0, 0)
         self.middle_frameLayout.addWidget(self.networkLoad, 0, 0)
         self.bottom_frameLayout.addWidget(self.volumeControl, 0, 0)
-        self.l_bottom_frameLayout.addWidget(self.ChatBox, 1, 0)
+
         self.l_bottom_frameLayout.addWidget(self.launchButton, 0, 0, 1, 1)
         self.l_top_frameLayout.addWidget(self.weather, 0, 0, 1, 1, Qt.AlignHCenter)
         self.initUI()

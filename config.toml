@@ -1,5 +1,5 @@
 [display]
-output_display = 1
+output_display = 0
 
 [format]
 time_format = "%H:%M<sup><u>%S</u></sup>"
@@ -27,6 +27,7 @@ url = "http://api.openweathermap.org/data/2.5/weather?units=metric&"
 city = "Kyiv"
 
 [openai]
+visible = false
 model_engine = "text-davinci-003"
 
 [colors]
@@ -38,3 +39,5 @@ we_wind_speed_color = "rgba(220, 250, 255, 250)"
 we_wind_dir_color = "rgba(220, 250, 255, 250)"
 clock_color = "rgba(255, 255, 255, 255)"
 
+[powermon]
+visible = false

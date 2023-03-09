@@ -50,6 +50,9 @@ def get_cputemp(sensor: str):
         raw_t = float(cpu_term.read()) / 1000
         return raw_t
 
+def get_power_consumption(sensor: str):
+    with open(sensor) as f:
+        return float(f.read())
 
 def get_size(bytes):
     """

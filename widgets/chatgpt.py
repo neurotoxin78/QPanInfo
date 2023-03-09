@@ -121,7 +121,6 @@ class GPTChat(QWidget):
     def update_chat(self, event):
         print("Click")
 
-
     @pyqtSlot(str, object)
     def updateText(self, string, color):
         self.answer_box.setTextColor(color)
