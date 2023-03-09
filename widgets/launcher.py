@@ -31,7 +31,7 @@ class LaunchButton(QWidget):
         runIco = u'\uE0B0'
         self.appBtn = QPushButton()
         self.appBtn.setFont(font)
-        self.appBtn.setText(" Виконати " + runIco)
+        # self.appBtn.setText(" Виконати " + runIco)
         self.appBtn.setIcon(QIcon.fromTheme("applications-other"))
         self.appBtn.setIconSize(QSize(32, 32))
         self.appBtn.setMaximumSize(240, 35)
