@@ -183,7 +183,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="right_frameLayout" rowstretch="0,0,0">
+      <layout class="QGridLayout" name="right_frameLayout" rowstretch="0,0,0,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -202,18 +202,41 @@
        <property name="verticalSpacing">
         <number>16</number>
        </property>
+       <item row="2" column="0">
+        <widget class="QFrame" name="bottom_frame">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>160</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>160</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="bottom_frameLayout"/>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QFrame" name="top_frame">
          <property name="minimumSize">
           <size>
            <width>320</width>
-           <height>0</height>
+           <height>160</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>320</width>
-           <height>65535</height>
+           <height>160</height>
           </size>
          </property>
          <property name="frameShape">
@@ -236,7 +259,7 @@
          <property name="maximumSize">
           <size>
            <width>320</width>
-           <height>65535</height>
+           <height>160</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -251,27 +274,15 @@
          <layout class="QGridLayout" name="middle_frameLayout"/>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QFrame" name="bottom_frame">
-         <property name="minimumSize">
-          <size>
-           <width>320</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>300</width>
-           <height>65535</height>
-          </size>
-         </property>
+       <item row="3" column="0">
+        <widget class="QFrame" name="power_frame">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="bottom_frameLayout"/>
+         <layout class="QHBoxLayout" name="power_frameLayout"/>
         </widget>
        </item>
       </layout>

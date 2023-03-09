@@ -40,7 +40,7 @@ class MainWindow(QMainWindow):
         self.systemLoad = SystemLoad()
         if self.config['powermon']['visible']:
             self.powerMon = PowerMonitor()
-            self.l_bottom_frameLayout.addWidget(self.powerMon, 1, 0)
+            self.power_frameLayout.addWidget(self.powerMon)
         self.networkLoad = NetworkLoad()
         self.volumeControl = VolumeControl()
         self.clock = Clock()

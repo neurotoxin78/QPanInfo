@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=python3 main.py
+Path=/home/neuro/App/QPanInfo
+Comment=Quick Info Panel
+Categories=System;
+Name=QPanInfo

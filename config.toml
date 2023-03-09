@@ -19,7 +19,7 @@ statusbar_msg_time_ms = 3000
 cpu_temp_sensor_path = "/sys/class/hwmon/hwmon1/temp1_input"
 
 [network]
-interface = "enp39s0"
+interface = "eth0"
 graph_data_limit = 60
 
 [weather]
@@ -40,4 +40,4 @@ we_wind_dir_color = "rgba(220, 250, 255, 250)"
 clock_color = "rgba(255, 255, 255, 255)"
 
 [powermon]
-visible = false
+visible = true
